@@ -1,0 +1,5 @@
+CONFIG_COMPILER_CXX_EXCEPTIONS=y
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+
+# Physical flash detected by esptool on the project ESP32 boards.
+CONFIG_ESPTOOLPY_FLASHSIZE_2MB=y

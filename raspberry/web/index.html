@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HK17.2 KMS</title>
+<style>
+:root{color-scheme:dark;--bg:#101216;--card:#181c22;--line:#2a3039;--text:#eef2f7;--muted:#9ea8b6;--ok:#62d394;--warn:#f2c14e;--bad:#ff6b6b;--accent:#77a9ff}
+*{box-sizing:border-box} body{margin:0;font:15px system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+main{max-width:1180px;margin:auto;padding:28px 18px 60px} h1{margin:0 0 4px;font-size:28px} h2{font-size:18px;margin:28px 0 12px}.sub{color:var(--muted);margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}.metric{font-size:22px;font-weight:700}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.badge{display:inline-block;padding:4px 9px;border-radius:999px;background:#252b34;font-size:12px;font-weight:700}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+button{border:1px solid var(--line);background:#232a34;color:var(--text);border-radius:8px;padding:8px 11px;cursor:pointer}button:hover{border-color:var(--accent)}button.approve{background:#173b29}button.reject{background:#442024}button.remove{background:#442a20}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:middle}th{color:var(--muted);font-size:12px;text-transform:uppercase}tr:last-child td{border-bottom:0}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px}.empty{color:var(--muted);padding:18px;background:var(--card);border:1px dashed var(--line);border-radius:10px}.key{display:inline-block;min-width:270px}.actions{display:flex;gap:8px;flex-wrap:wrap}@media(max-width:760px){table{display:block;overflow-x:auto}.key{min-width:200px}}
+</style>
+</head>
+<body><main>
+<h1>HK17.2 Key Management Server</h1>
+<div class="sub">Raspberry Pi 3 · Alice/KMS · Laboratory administration interface</div>
+<div class="grid">
+  <div class="card"><div class="label">KMS</div><div id="kms" class="metric">—</div></div>
+  <div class="card"><div class="label">MQTT broker</div><div id="mqtt" class="metric">—</div><div id="broker" class="sub"></div></div>
+  <div class="card"><div class="label">Default modulus p</div><div id="modulo" class="metric mono">—</div></div>
+</div>
+
+<h2>Pending network requests</h2>
+<div id="pending"></div>
+
+<h2>Nodes and sessions</h2>
+<div id="nodes"></div>
+</main>
+<script>
+const visibleKeys = new Map();
+const nodeSessions = new Map();
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const statusClass=s=>s==='ESTABLISHED'?'ok':s==='PENDING_APPROVAL'||s==='KEY_EXCHANGE'?'warn':s==='REJECTED'?'bad':'';
+async function post(url){const r=await fetch(url,{method:'POST'});if(!r.ok){const x=await r.json().catch(()=>({detail:r.statusText}));alert(x.detail||r.statusText);}await refresh();}
+async function removeNode(id){if(!confirm(`Remove ${id} from the HK17.2 network and erase the active session key at both endpoints?`))return;await post(`/api/nodes/${encodeURIComponent(id)}/remove`);}
+async function toggleKey(id){
+  if(visibleKeys.has(id)){visibleKeys.delete(id);await refresh();return;}
+  const r=await fetch(`/api/nodes/${encodeURIComponent(id)}/key`,{cache:'no-store'});
+  if(!r.ok){const x=await r.json().catch(()=>({detail:r.statusText}));alert(x.detail||r.statusText);return;}
+  const x=await r.json();
+  visibleKeys.set(id,{value:`(${x.key.join(', ')})`,established_at:nodeSessions.get(id)||null});
+  await refresh();
+}
+function renderPending(items){const el=document.getElementById('pending');if(!items.length){el.innerHTML='<div class="empty">No pending JOIN requests.</div>';return;}el.innerHTML=items.map(n=>`<div class="card" style="margin-bottom:10px"><b>${esc(n.label)}</b> <span class="mono">${esc(n.device_id)}</span><br><span class="badge warn">PENDING APPROVAL</span><div class="sub">Requested: ${esc(n.requested_at)}</div><div class="actions"><button class="approve" onclick="post('/api/nodes/${encodeURIComponent(n.device_id)}/approve')">Approve</button><button class="reject" onclick="post('/api/nodes/${encodeURIComponent(n.device_id)}/reject')">Reject</button></div></div>`).join('');}
+function renderNodes(items){
+  const el=document.getElementById('nodes');
+  if(!items.length){el.innerHTML='<div class="empty">No ESP32 nodes have contacted the KMS yet.</div>';return;}
+  for(const n of items){
+    const previousSession=nodeSessions.get(n.device_id);
+    if(n.status!=='ESTABLISHED'||previousSession!==n.established_at){
+      visibleKeys.delete(n.device_id);
+    }
+    nodeSessions.set(n.device_id,n.established_at||null);
+  }
+  el.innerHTML=`<table><thead><tr><th>Node</th><th>Device ID</th><th>Status</th><th>Last activity</th><th>Session key</th><th>Actions</th></tr></thead><tbody>${items.map(n=>{
+    const cached=visibleKeys.get(n.device_id);
+    const key=n.key_available?(cached?.value||'••••••••••••••••••••••••'):'—';
+    const eye=n.key_available?`<button onclick="toggleKey('${esc(n.device_id)}')">${cached?'Hide':'👁 Show'}</button>`:'';
+    const remove=n.status==='ESTABLISHED'?`<button class="remove" onclick="removeNode('${esc(n.device_id)}')">Remove from network</button>`:''; return `<tr><td><b>${esc(n.label)}</b></td><td class="mono">${esc(n.device_id)}</td><td><span class="badge ${statusClass(n.status)}">${esc(n.status)}</span></td><td>${esc(n.last_activity)}</td><td><span class="mono key">${esc(key)}</span>${eye}</td><td>${remove}</td></tr>`
+  }).join('')}</tbody></table>`;
+}
+async function refresh(){try{const r=await fetch('/api/state',{cache:'no-store'});const s=await r.json();document.getElementById('kms').textContent=s.kms_online?'ONLINE':'OFFLINE';document.getElementById('kms').className='metric '+(s.kms_online?'ok':'bad');document.getElementById('mqtt').textContent=s.mqtt_connected?'ONLINE':'OFFLINE';document.getElementById('mqtt').className='metric '+(s.mqtt_connected?'ok':'bad');document.getElementById('broker').textContent=s.broker;document.getElementById('modulo').textContent=s.modulo;renderPending(s.pending);renderNodes(s.nodes);}catch(e){document.getElementById('kms').textContent='UNREACHABLE';document.getElementById('kms').className='metric bad';}}
+refresh();setInterval(refresh,1000);
+</script></body></html>
