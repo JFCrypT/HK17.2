@@ -167,6 +167,12 @@ HK17.2/
 │   │   └── index.html
 │   ├── wire.py
 │   └── wire_conformance_test.py
+├── screenshots/
+│   ├── kms_1.png
+│   ├── kms_2.png
+│   ├── node_1.png
+│   ├── node_2.png
+│   └── node_3.png
 ├── security/
 │   ├── analyze_security_results.py
 │   ├── derived_security_summary.csv
@@ -408,6 +414,48 @@ PENDING_APPROVAL
 
 JOIN, approval/rejection, node-initiated leave, rejoin, and KMS-initiated removal are management operations outside the frozen HK17.2 cryptographic transcript.
 
+#### Web administration interfaces
+
+The laboratory implementation provides independent HTTP administration interfaces for the Raspberry Pi 3 KMS and for each ESP32 node.
+
+The KMS dashboard exposes pending admission requests, deterministic node identities, session states, masked session keys, and administrative actions. The following example shows ESP32-02 waiting for operator approval while ESP32-01 already maintains an established HK17.2 session.
+
+<p align="center">
+  <img src="screenshots/kms_1.png" width="900" alt="HK17.2 KMS dashboard with a pending ESP32 admission request">
+</p>
+
+After an admission decision, the dashboard records the resulting state of each node. Session keys are masked by default and can be revealed explicitly for laboratory verification. In the following example, ESP32-01 is established while ESP32-02 has been rejected.
+
+<p align="center">
+  <img src="screenshots/kms_2.png" width="900" alt="HK17.2 KMS dashboard showing established and rejected ESP32 nodes">
+</p>
+
+Each ESP32 exposes its own local interface. An established node reports its deterministic device identifier, IP address, Wi-Fi and MQTT connectivity, network state, and the status of the locally derived Bob session key `kB`.
+
+<p align="center">
+  <img src="screenshots/node_1.png" width="700" alt="HK17.2 ESP32 node with an established session and masked key">
+</p>
+
+For laboratory verification, the locally derived session key can be explicitly revealed:
+
+<p align="center">
+  <img src="screenshots/node_2.png" width="700" alt="HK17.2 ESP32 node displaying its locally derived session key">
+</p>
+
+A rejected admission is reflected independently by the corresponding node:
+
+<p align="center">
+  <img src="screenshots/node_3.png" width="700" alt="HK17.2 ESP32 node in rejected state">
+</p>
+
+The key displayed by the KMS is Alice's locally derived `kA`, whereas the key displayed by the ESP32 is Bob's locally derived `kB`. In the examples above, both endpoints display the same session key,
+
+```text
+(75, 110, 7, 212, 59, 204, 121, 42)
+```
+
+providing direct laboratory evidence that the two endpoints derived the same value independently. The session key is not transported through the HK17.2 MQTT transcript; the Show/Hide controls expose only the value already stored locally at each endpoint for experimental verification.
+
 #### Distributed HK17.2 exchange
 
 After approval, the cryptographic exchange remains:
@@ -470,6 +518,8 @@ MQTT broker:   192.168.1.40:1883
 The KMS process uses `127.0.0.1:1883` as its local loopback connection to the same Mosquitto broker that the ESP32 nodes reach through `192.168.1.40:1883`.
 
 No additional cryptographic layer has been introduced into HK17.2 by the embedded port.
+
+The `screenshots/` directory contains the final WebUI evidence used to document the validated laboratory states shown above.
 
 ### Historical protocol implementations
 
