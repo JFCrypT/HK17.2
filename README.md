@@ -167,12 +167,14 @@ HK17.2/
 │   │   └── index.html
 │   ├── wire.py
 │   └── wire_conformance_test.py
-├── screenshots/
-│   ├── kms_1.png
-│   ├── kms_2.png
-│   ├── node_1.png
-│   ├── node_2.png
-│   └── node_3.png
+├── docs/
+│   └── images/
+│       ├── cryptographic_exchange.png
+│       ├── kms_1.png
+│       ├── kms_2.png
+│       ├── node_1.png
+│       ├── node_2.png
+│       └── node_3.png
 ├── security/
 │   ├── analyze_security_results.py
 │   ├── derived_security_summary.csv
@@ -421,31 +423,31 @@ The laboratory implementation provides independent HTTP administration interface
 The KMS dashboard exposes pending admission requests, deterministic node identities, session states, masked session keys, and administrative actions. The following example shows ESP32-02 waiting for operator approval while ESP32-01 already maintains an established HK17.2 session.
 
 <p align="center">
-  <img src="screenshots/kms_1.png" width="900" alt="HK17.2 KMS dashboard with a pending ESP32 admission request">
+  <img src="docs/images/kms_1.png" width="900" alt="HK17.2 KMS dashboard with a pending ESP32 admission request">
 </p>
 
 After an admission decision, the dashboard records the resulting state of each node. Session keys are masked by default and can be revealed explicitly for laboratory verification. In the following example, ESP32-01 is established while ESP32-02 has been rejected.
 
 <p align="center">
-  <img src="screenshots/kms_2.png" width="900" alt="HK17.2 KMS dashboard showing established and rejected ESP32 nodes">
+  <img src="docs/images/kms_2.png" width="900" alt="HK17.2 KMS dashboard showing established and rejected ESP32 nodes">
 </p>
 
 Each ESP32 exposes its own local interface. An established node reports its deterministic device identifier, IP address, Wi-Fi and MQTT connectivity, network state, and the status of the locally derived Bob session key `kB`.
 
 <p align="center">
-  <img src="screenshots/node_1.png" width="700" alt="HK17.2 ESP32 node with an established session and masked key">
+  <img src="docs/images/node_1.png" width="700" alt="HK17.2 ESP32 node with an established session and masked key">
 </p>
 
 For laboratory verification, the locally derived session key can be explicitly revealed:
 
 <p align="center">
-  <img src="screenshots/node_2.png" width="700" alt="HK17.2 ESP32 node displaying its locally derived session key">
+  <img src="docs/images/node_2.png" width="700" alt="HK17.2 ESP32 node displaying its locally derived session key">
 </p>
 
 A rejected admission is reflected independently by the corresponding node:
 
 <p align="center">
-  <img src="screenshots/node_3.png" width="700" alt="HK17.2 ESP32 node in rejected state">
+  <img src="docs/images/node_3.png" width="700" alt="HK17.2 ESP32 node in rejected state">
 </p>
 
 The key displayed by the KMS is Alice's locally derived `kA`, whereas the key displayed by the ESP32 is Bob's locally derived `kB`. In the examples above, both endpoints display the same session key,
@@ -460,19 +462,9 @@ providing direct laboratory evidence that the two endpoints derived the same val
 
 After approval, the cryptographic exchange remains:
 
-```text
-ESP32 / Bob                         Raspberry Pi 3 / Alice-KMS
-
-              <------------- A, B, q, u, v
-              <------------- TA
-
-TB ------------------------------->
-
-              <------------- p, oA
-              <------------- rA
-
-rB ------------------------------->
-```
+<p align="center">
+  <img src="docs/images/cryptographic_exchange.png" width="900" alt="HK17.2 cryptographic exchange between ESP32 Bob and Raspberry Pi 3 Alice-KMS">
+</p>
 
 The HK17.2 MQTT payload representation is binary. JSON is not used for the cryptographic MQTT transcript.
 
@@ -519,7 +511,7 @@ The KMS process uses `127.0.0.1:1883` as its local loopback connection to the sa
 
 No additional cryptographic layer has been introduced into HK17.2 by the embedded port.
 
-The `screenshots/` directory contains the final WebUI evidence used to document the validated laboratory states shown above.
+The `docs/images/` directory contains the cryptographic-exchange figure and the final WebUI evidence used to document the validated laboratory states shown above.
 
 ### Historical protocol implementations
 
