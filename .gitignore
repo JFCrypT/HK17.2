@@ -99,3 +99,6 @@ dist/
 *.bin
 # VS Code workspace
 *.code-workspace
+
+# ESP-IDF managed components
+esp32/managed_components/

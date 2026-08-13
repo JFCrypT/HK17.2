@@ -19,7 +19,14 @@ table{width:100%;border-collapse:collapse;background:var(--card);border:1px soli
 <div class="sub">Raspberry Pi 3 · Alice/KMS · Laboratory administration interface</div>
 <div class="grid">
   <div class="card"><div class="label">KMS</div><div id="kms" class="metric">—</div></div>
-  <div class="card"><div class="label">MQTT broker</div><div id="mqtt" class="metric">—</div><div id="broker" class="sub"></div></div>
+  <div class="card">
+    <div class="label">MQTT broker (RPi3)</div>
+    <div id="mqtt" class="metric">—</div>
+    <div class="sub" style="margin-bottom:0">
+      <div><strong>ESP32 endpoint:</strong> <span id="broker-lan" class="mono">—</span></div>
+      <div><strong>KMS local link:</strong> <span id="broker-local" class="mono">—</span></div>
+    </div>
+  </div>
   <div class="card"><div class="label">Default modulus p</div><div id="modulo" class="metric mono">—</div></div>
 </div>
 
@@ -62,6 +69,6 @@ function renderNodes(items){
     const remove=n.status==='ESTABLISHED'?`<button class="remove" onclick="removeNode('${esc(n.device_id)}')">Remove from network</button>`:''; return `<tr><td><b>${esc(n.label)}</b></td><td class="mono">${esc(n.device_id)}</td><td><span class="badge ${statusClass(n.status)}">${esc(n.status)}</span></td><td>${esc(n.last_activity)}</td><td><span class="mono key">${esc(key)}</span>${eye}</td><td>${remove}</td></tr>`
   }).join('')}</tbody></table>`;
 }
-async function refresh(){try{const r=await fetch('/api/state',{cache:'no-store'});const s=await r.json();document.getElementById('kms').textContent=s.kms_online?'ONLINE':'OFFLINE';document.getElementById('kms').className='metric '+(s.kms_online?'ok':'bad');document.getElementById('mqtt').textContent=s.mqtt_connected?'ONLINE':'OFFLINE';document.getElementById('mqtt').className='metric '+(s.mqtt_connected?'ok':'bad');document.getElementById('broker').textContent=s.broker;document.getElementById('modulo').textContent=s.modulo;renderPending(s.pending);renderNodes(s.nodes);}catch(e){document.getElementById('kms').textContent='UNREACHABLE';document.getElementById('kms').className='metric bad';}}
+async function refresh(){try{const r=await fetch('/api/state',{cache:'no-store'});const s=await r.json();document.getElementById('kms').textContent=s.kms_online?'ONLINE':'OFFLINE';document.getElementById('kms').className='metric '+(s.kms_online?'ok':'bad');document.getElementById('mqtt').textContent=s.mqtt_connected?'ONLINE':'OFFLINE';document.getElementById('mqtt').className='metric '+(s.mqtt_connected?'ok':'bad');document.getElementById('broker-lan').textContent=s.broker_lan||s.broker;document.getElementById('broker-local').textContent=s.broker;document.getElementById('modulo').textContent=s.modulo;renderPending(s.pending);renderNodes(s.nodes);}catch(e){document.getElementById('kms').textContent='UNREACHABLE';document.getElementById('kms').className='metric bad';}}
 refresh();setInterval(refresh,1000);
 </script></body></html>

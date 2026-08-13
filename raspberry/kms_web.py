@@ -22,7 +22,7 @@ from kms_server import HK17MQTTKMS, ServerConfig
 WEB_INDEX = Path(__file__).resolve().parent / "web" / "index.html"
 
 
-def create_app(service: HK17MQTTKMS) -> FastAPI:
+def create_app(service: HK17MQTTKMS, broker_lan_host: str) -> FastAPI:
     app = FastAPI(
         title="HK17.2 KMS Administration",
         docs_url=None,
@@ -36,7 +36,9 @@ def create_app(service: HK17MQTTKMS) -> FastAPI:
 
     @app.get("/api/state")
     def state() -> dict[str, object]:
-        return service.dashboard_state()
+        dashboard = service.dashboard_state()
+        dashboard["broker_lan"] = f"{broker_lan_host}:{service.config.broker_port}"
+        return dashboard
 
     @app.post("/api/nodes/{device_id}/approve")
     def approve(device_id: str) -> dict[str, str]:
@@ -77,6 +79,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="HK17.2 KMS web administration service")
     parser.add_argument("--broker-host", default="127.0.0.1")
     parser.add_argument("--broker-port", type=int, default=1883)
+    parser.add_argument(
+        "--broker-lan-host",
+        default="192.168.1.40",
+        help="LAN address advertised in the administration dashboard for ESP32 nodes",
+    )
     parser.add_argument("--modulo", type=int, default=DEFAULT_MODULO)
     parser.add_argument("--qos", type=int, choices=(0, 1), default=1)
     parser.add_argument("--web-host", default="0.0.0.0")
@@ -100,7 +107,7 @@ def main() -> int:
             modulo=args.modulo,
         )
     )
-    app = create_app(service)
+    app = create_app(service, args.broker_lan_host)
 
     service.start_background()
     logging.info("KMS administration UI: http://%s:%d", args.web_host, args.web_port)

@@ -47,6 +47,26 @@ STATUS_ESTABLISHED = "ESTABLISHED"
 STATUS_REJECTED = "REJECTED"
 STATUS_NOT_JOINED = "NOT_JOINED"
 
+# Stable laboratory identities. These labels must not depend on connection order.
+LAB_DEVICE_LABELS = {
+    "esp32-2043a86b2794": "ESP32-01",
+    "esp32-6cc8403465b8": "ESP32-02",
+}
+
+
+def _label_for_device(device_id: str) -> str:
+    """Return a deterministic display label for a device.
+
+    The two physical thesis nodes have fixed laboratory labels. Unknown future
+    nodes receive a stable label derived from their device_id rather than from
+    first-contact order.
+    """
+    known = LAB_DEVICE_LABELS.get(device_id)
+    if known is not None:
+        return known
+    suffix = device_id.removeprefix("esp32-")[-6:].upper()
+    return f"ESP32-{suffix}"
+
 
 def _now() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
@@ -118,7 +138,7 @@ class HK17MQTTKMS:
         if record is None:
             record = NodeRecord(
                 device_id=device_id,
-                label=f"ESP32-{len(self._nodes) + 1:02d}",
+                label=_label_for_device(device_id),
             )
             self._nodes[device_id] = record
         return record
