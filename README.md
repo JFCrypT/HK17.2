@@ -56,6 +56,10 @@ The distributed embedded implementation is also functional:
 12\. The KMS-side session-key display cache was corrected so that a newly established session never displays the previously revealed key.
 13\. The current management layer also implements KMS-initiated node removal. This command is outside the frozen HK17.2 transcript and causes both endpoints to erase the corresponding active session.
 14\. The project now uses a dedicated laboratory WLAN, `JFCrypT-Lab`, with predictable DHCP reservations for the KMS and both ESP32 nodes.
+15\. Controlled Raspberry Pi 3 performance evaluation has been completed.
+16\. The official 1000-execution ESP32/Bob performance benchmark has been completed on ESP32-01.
+17\. After benchmarking, ESP32-01 was reflashed with the operational `esp32dev` firmware.
+18\. Final two-node connectivity, MQTT operation, admission control, key establishment, and administration were revalidated with both physical ESP32 nodes, leaving the laboratory deployment ready for thesis-defense demonstration.
 
 The implementation methodology followed by the project is:
 
@@ -73,7 +77,7 @@ management-layer validation
 performance evaluation
 \`\`\`
 
-The next experimental stage is the controlled performance evaluation of the Raspberry Pi 3, ESP32, and complete distributed exchange.
+The controlled Raspberry Pi 3 and ESP32 performance evaluations have been completed. After benchmarking, the ESP32 used for performance testing was reflashed with the operational `esp32dev` firmware, and the complete two-node laboratory deployment was functionally revalidated. The implementation is therefore in its final thesis-defense demonstration state.
 
 
 **---**
@@ -100,15 +104,21 @@ HK17.2/
 │   │   ├── hk17\_network\_config.hpp
 │   │   ├── hk17\_wire.hpp
 │   │   └── network\_secrets.example.hpp
+│   ├── performance/
+│   │   ├── esp32-2043a86b2794\_performance\_results.csv
+│   │   └── esp32-2043a86b2794\_performance\_summary.csv
 │   ├── src/
 │   │   ├── CMakeLists.txt
 │   │   ├── hk17\_math.cpp
 │   │   ├── hk17\_wire.cpp
 │   │   ├── idf\_component.yml
 │   │   ├── main.cpp
-│   │   └── network\_main.cpp
+│   │   ├── network\_main.cpp
+│   │   └── performance\_main.cpp
 │   └── tools/
-│       └── generate\_canonical\_header.py
+│       ├── capture\_performance.py
+│       ├── generate\_canonical\_header.py
+│       └── requirements.txt
 ├── general/
 │   ├── hk17\_2-v2.py
 │   ├── octonions.py
@@ -144,6 +154,11 @@ HK17.2/
 │   ├── kms\_server.py
 │   ├── kms\_web.py
 │   ├── mosquitto.conf
+│   ├── performance\_test.py
+│   ├── performance\_reference\_results.csv
+│   ├── performance\_reference\_summary.csv
+│   ├── performance\_kms\_results.csv
+│   ├── performance\_kms\_summary.csv
 │   ├── requirements.txt
 │   ├── start\_kms.sh
 │   ├── web/
@@ -291,7 +306,40 @@ The general-purpose hardware benchmark currently consists of 1000 independent ex
 
 The benchmark was performed on Ubuntu (Xubuntu) 24.04.4 LTS x86\_64 using Python 3.12.3, an Intel Core i7-13620H processor, and 64 GB of RAM. No GPU acceleration was used.
 
-Equivalent controlled benchmarks for the Raspberry Pi 3 and ESP32 implementations, followed by an end-to-end distributed-session benchmark, are the next experimental stage.
+Controlled performance evaluations have also been completed on the Raspberry Pi 3 and on a physical ESP32.
+
+The Raspberry Pi 3 campaign includes the reference-implementation benchmark and the Alice/KMS cryptographic benchmark. The ESP32 campaign includes a 1000-execution Bob-side cryptographic benchmark using the frozen canonical `p=251` workload. Raw measurements and statistical summaries are stored with the corresponding platform implementation.
+
+The embedded measurements deliberately separate local cryptographic execution from network transport so that platform computation can be characterized independently of Wi-Fi, MQTT, HTTP, and browser activity.
+
+**#### Raspberry Pi 3 and ESP32 performance artifacts**
+
+The final embedded performance campaign is stored with each platform implementation.
+
+Raspberry Pi 3:
+
+\`\`\`text
+raspberry/performance_test.py
+raspberry/performance_reference_results.csv
+raspberry/performance_reference_summary.csv
+raspberry/performance_kms_results.csv
+raspberry/performance_kms_summary.csv
+\`\`\`
+
+ESP32:
+
+\`\`\`text
+esp32/src/performance_main.cpp
+esp32/tools/capture_performance.py
+esp32/performance/esp32-2043a86b2794_performance_results.csv
+esp32/performance/esp32-2043a86b2794_performance_summary.csv
+\`\`\`
+
+The Raspberry Pi 3 benchmark separates execution of the frozen reference implementation from the Alice/KMS cryptographic workload. The ESP32 benchmark measures Bob-side cryptographic computation locally and excludes Wi-Fi, MQTT, HTTP, and serial-output overhead from the measured interval.
+
+The official ESP32 performance experiment uses 1000 executions of the frozen canonical `p=251` workload. Repeating the canonical workload allows timing variability to be attributed to the platform rather than to changing protocol inputs, while every iteration remains tied to the same conformance reference used during implementation validation.
+
+After performance testing, the benchmark firmware was removed from the tested ESP32 and the operational `esp32dev` firmware was restored.
 
 **### Embedded and KMS implementations**
 
@@ -333,14 +381,12 @@ The project provides three PlatformIO environments:
 
 The native C++ implementation and both physical ESP32 devices successfully reproduce all five official HK17.2 canonical test vectors, including the 64-bit octonion-modulus configuration.
 
-The two physical thesis nodes have deterministic KMS labels derived from their known `device_id` values: `esp32-2043a86b2794` is always `ESP32-01`, and `esp32-6cc8403465b8` is always `ESP32-02`. Unknown future nodes receive a stable fallback label derived from their `device_id`, so dashboard naming never depends on connection order.
-
 The distributed ESP32 firmware also provides:
 
 \- a local HTTP administration page on TCP port 80;
 \- current Wi-Fi, MQTT, node-state, IP-address, and device-ID information;
-\- a \`Request network join\` operation that is enabled only when MQTT is connected and the node is in an admissible state;
-\- a \`Leave network\` operation with state-aware UI control;
+\- a \`Request network join\` operation;
+\- a \`Leave network\` operation;
 \- masked local session-key visualization with explicit Show/Hide control;
 \- a serial CLI with \`help\`, \`status\`, \`join\`, \`leave\`, and \`show-key\`;
 \- processing of KMS-issued administrative removal commands.
@@ -537,10 +583,9 @@ The dashboard is available over plain HTTP at:
 http://192.168.1.40:8000/
 \`\`\`
 
-The repository also provides \`raspberry/start\_kms.sh\`, which starts the project Mosquitto broker and \`kms\_web.py\` for unattended operation. The startup script refuses to reuse an arbitrary Mosquitto instance and verifies that the project broker is listening on \`0.0.0.0:1883\` before starting the KMS web service. On the laboratory Raspberry Pi, first disable the distribution Mosquitto service once, then register the project startup script:
+The repository also provides \`raspberry/start\_kms.sh\`, which starts the project Mosquitto broker and \`kms\_web.py\` for unattended operation. On the laboratory Raspberry Pi it can be registered with:
 
 \`\`\`bash
-sudo systemctl disable --now mosquitto
 chmod +x raspberry/start\_kms.sh
 crontab -e
 \`\`\`
@@ -616,7 +661,7 @@ show-key
 
 This repository is an academic research prototype intended for protocol specification, algebraic experimentation, cryptanalytic analysis, numerical examples, cross-platform implementation, embedded-system validation, and reproducibility of research results.
 
-The current implementation has been validated functionally on a general-purpose PC, Raspberry Pi 3, and two physical ESP32 devices, but it has not been designed, audited, or approved for production cryptographic use.
+The current implementation has been validated functionally on a general-purpose PC, Raspberry Pi 3, and two physical ESP32 devices. Controlled performance evaluation has also been completed on the PC, Raspberry Pi 3, and ESP32. The final laboratory deployment has been returned to the operational two-node configuration and revalidated for thesis-defense demonstration. The software remains an academic research prototype and has not been designed, audited, or approved for production cryptographic use.
 
 **## Complete numerical example**
 

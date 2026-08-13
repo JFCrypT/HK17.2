@@ -190,7 +190,7 @@ device_id: esp32-6cc8403465b8
 IP:        192.168.1.85
 ```
 
-The two thesis nodes have deterministic laboratory labels based on `device_id`, so their names never depend on connection order. Unknown future nodes receive a stable fallback label derived from their `device_id`.
+Friendly labels `ESP32-01`, `ESP32-02`, ... are assigned in memory in order of first contact.
 
 ## MQTT topics
 
@@ -230,18 +230,12 @@ The repository provides:
 raspberry/start_kms.sh
 ```
 
-It starts the project Mosquitto broker and the operational `kms_web.py` service. The script accepts an already-running broker only when it was started with this repository's `raspberry/mosquitto.conf`; it refuses to reuse an arbitrary Mosquitto process that might be bound only to loopback.
+It starts the project Mosquitto broker and the operational `kms_web.py` service.
 
 Make it executable:
 
 ```bash
 chmod +x raspberry/start_kms.sh
-```
-
-Before enabling unattended startup, disable the distribution Mosquitto service once so it cannot claim TCP/1883 before the project broker:
-
-```bash
-sudo systemctl disable --now mosquitto
 ```
 
 To start the complete KMS stack automatically when the Raspberry Pi boots:
@@ -264,6 +258,42 @@ raspberry/logs/
 
 The logs are local runtime artifacts and are ignored by Git.
 
+
+## Performance evaluation
+
+The controlled Raspberry Pi 3 performance campaign has been completed.
+
+The benchmark implementation is:
+
+```text
+raspberry/performance_test.py
+```
+
+Two complementary modes are used:
+
+```text
+reference
+```
+
+Runs the frozen `general/hk17_2-v2.py` implementation on the Raspberry Pi 3. This mode is directly comparable with the general-purpose PC benchmark because it executes the same reference implementation and workload family.
+
+```text
+kms
+```
+
+Measures the cryptographic work performed by Alice/KMS locally. A local Bob workload drives the protocol, but Bob computation, MQTT, Wi-Fi, HTTP, and serialization are excluded from the Alice/KMS timing.
+
+The generated performance artifacts are:
+
+```text
+raspberry/performance_reference_results.csv
+raspberry/performance_reference_summary.csv
+raspberry/performance_kms_results.csv
+raspberry/performance_kms_summary.csv
+```
+
+The performance campaign was executed only after both Raspberry Pi conformance suites had passed all five official canonical vectors.
+
 ## Standalone MQTT server
 
 `kms_server.py` remains available for development and diagnostics, but it has no approval dashboard.
@@ -273,3 +303,20 @@ The normal operational entry point for the laboratory deployment is:
 ```bash
 python3 raspberry/kms_web.py
 ```
+
+
+## Final laboratory state
+
+After completion of Raspberry Pi and ESP32 performance testing, the laboratory was returned to its operational configuration.
+
+The final thesis-defense configuration has been revalidated with:
+
+```text
+RPi3 / KMS     192.168.1.40
+ESP32-01       192.168.1.75
+ESP32-02       192.168.1.85
+MQTT broker    192.168.1.40:1883
+KMS Web UI     http://192.168.1.40:8000/
+```
+
+Mosquitto and the KMS web service start automatically on the Raspberry Pi through `start_kms.sh` and the local `@reboot` cron entry. Both ESP32 nodes reconnect to the broker, can request admission, complete HK17.2, and are independently manageable from the KMS dashboard.
