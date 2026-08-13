@@ -1,69 +1,69 @@
-**# HK17.2**
+# HK17.2
 
 HK17.2 is an experimental post-quantum key exchange protocol based on modular octonion arithmetic, polynomial matrix exchange, secret displacement, and discrete modular pointwise self-convolution.
 
-The protocol extends the HK17 family by incorporating a polynomial matrix exchange over a modular matrix ring. Alice and Bob independently obtain the same shared matrix and deterministically derive from it a private shared octonion \`oB\`. Since \`oB\` is not transmitted through the public channel in the definitive HK17.2 construction, the protocol prevents its direct cancellation from the public octonion tokens.
+The protocol extends the HK17 family by incorporating a polynomial matrix exchange over a modular matrix ring. Alice and Bob independently obtain the same shared matrix and deterministically derive from it a private shared octonion `oB`. Since `oB` is not transmitted through the public channel in the definitive HK17.2 construction, the protocol prevents its direct cancellation from the public octonion tokens.
 
-**## Research context**
+## Research context
 
 This repository contains the experimental software associated with the doctoral research project:
 
-**\*\*Design, Development, and Cryptanalysis of a Key Exchange Protocol Based on Hypercomplex Numbers and Modular Discrete Convolution and Noncommutative Matrix Rings\*\***
+**Design, Development, and Cryptanalysis of a Key Exchange Protocol Based on Hypercomplex Numbers and Modular Discrete Convolution and Noncommutative Matrix Rings**
 
 Universidad Abierta Interamericana  
 PhD in Computer Science
 
-**---**
+---
 
-**## Main components**
+## Main components
 
-\- Modular arithmetic over octonions.
-\- Non-commutative and non-associative algebraic operations.
-\- Polynomial matrix exchange over modular matrix rings.
-\- Deterministic derivation of the private shared octonion \`oB\`.
-\- Secret octonion displacements.
-\- Discrete modular pointwise self-convolution.
-\- Experimental cryptanalysis of HK17 and HK17.2.
-\- General-purpose hardware performance evaluation.
-\- Statistical and experimental security analysis.
-\- Official deterministic canonical test vectors for all selectable HK17.2 octonion moduli.
-\- Raspberry Pi 3/Alice-KMS implementation in Python.
-\- ESP32/Bob implementation in C++ using PlatformIO and ESP-IDF.
-\- Binary MQTT transport between the Raspberry Pi 3 KMS and ESP32 nodes.
-\- Cross-platform implementation-conformance validation against the canonical test vectors.
-\- FastAPI-based KMS administration dashboard.
-\- Local HTTP administration interface and serial CLI on each ESP32 node.
-\- Operator-controlled node admission, rejection, leave/rejoin, and KMS-initiated removal management.
-\- Dedicated reproducible laboratory network deployment using DHCP reservations.
+- Modular arithmetic over octonions.
+- Non-commutative and non-associative algebraic operations.
+- Polynomial matrix exchange over modular matrix rings.
+- Deterministic derivation of the private shared octonion `oB`.
+- Secret octonion displacements.
+- Discrete modular pointwise self-convolution.
+- Experimental cryptanalysis of HK17 and HK17.2.
+- General-purpose hardware performance evaluation.
+- Statistical and experimental security analysis.
+- Official deterministic canonical test vectors for all selectable HK17.2 octonion moduli.
+- Raspberry Pi 3/Alice-KMS implementation in Python.
+- ESP32/Bob implementation in C++ using PlatformIO and ESP-IDF.
+- Binary MQTT transport between the Raspberry Pi 3 KMS and ESP32 nodes.
+- Cross-platform implementation-conformance validation against the canonical test vectors.
+- FastAPI-based KMS administration dashboard.
+- Local HTTP administration interface and serial CLI on each ESP32 node.
+- Operator-controlled node admission, rejection, leave/rejoin, and KMS-initiated removal management.
+- Dedicated reproducible laboratory WLAN with DHCP reservations.
+- Controlled performance evaluation on PC, Raspberry Pi 3, and physical ESP32 hardware.
 
-**## Current development status**
+## Current development status
 
-The definitive HK17.2 Python implementation, cryptanalytic experiments, general-purpose hardware performance benchmark, statistical security analysis, complete numerical example, and five canonical conformance vectors are available in the repository.
+The definitive HK17.2 Python implementation, cryptanalytic experiments, statistical security analysis, complete numerical example, canonical conformance material, embedded implementations, distributed KMS integration, management layer, and controlled performance experiments are complete for the current thesis version.
 
-The distributed embedded implementation is also functional:
+The final embedded implementation has been validated as follows:
 
-1\. The Raspberry Pi 3/Alice-KMS port is implemented in Python.
-2\. The Raspberry Pi 3 implementation reproduces all five official canonical test vectors.
-3\. The binary wire representation used by the distributed implementation reproduces all five official canonical test vectors.
-4\. The ESP32/Bob port is implemented in C++ using PlatformIO and ESP-IDF.
-5\. The C++ port reproduces all five official canonical test vectors in the native PlatformIO environment.
-6\. Both physical ESP32 devices reproduce all five canonical vectors on hardware.
-7\. A Raspberry Pi 3 running the Alice-KMS and Mosquitto broker has completed real HK17.2 exchanges with both ESP32 nodes over Wi-Fi/MQTT.
-8\. In both physical-node experiments, Alice and Bob independently derived the same session key.
-9\. The KMS provides a FastAPI administration dashboard with node state, pending admission requests, approval/rejection controls, and masked session-key visualization.
-10\. Each ESP32 provides a local HTTP interface and serial CLI for status inspection, JOIN requests, network leave, and local session-key visualization.
-11\. The admission-management workflow has been exercised with JOIN, approval, rejection, leave, rejoin, and a second successful approval.
-12\. The KMS-side session-key display cache was corrected so that a newly established session never displays the previously revealed key.
-13\. The current management layer also implements KMS-initiated node removal. This command is outside the frozen HK17.2 transcript and causes both endpoints to erase the corresponding active session.
-14\. The project now uses a dedicated laboratory WLAN, `JFCrypT-Lab`, with predictable DHCP reservations for the KMS and both ESP32 nodes.
-15\. Controlled Raspberry Pi 3 performance evaluation has been completed.
-16\. The official 1000-execution ESP32/Bob performance benchmark has been completed on ESP32-01.
-17\. After benchmarking, ESP32-01 was reflashed with the operational `esp32dev` firmware.
-18\. Final two-node connectivity, MQTT operation, admission control, key establishment, and administration were revalidated with both physical ESP32 nodes, leaving the laboratory deployment ready for thesis-defense demonstration.
+1. The Raspberry Pi 3/Alice-KMS port is implemented in Python.
+2. The Raspberry Pi 3 implementation reproduces all five official canonical test vectors.
+3. The binary wire representation reproduces all five official canonical test vectors.
+4. The ESP32/Bob port is implemented in C++ using PlatformIO and ESP-IDF.
+5. The native C++ port reproduces all five official canonical test vectors.
+6. Both physical ESP32 devices reproduce all five canonical vectors on hardware.
+7. Real HK17.2 exchanges have been completed between the Raspberry Pi 3 KMS and both physical ESP32 nodes over Wi-Fi/MQTT.
+8. Alice and Bob independently derive matching session keys; the session key itself is not transmitted over MQTT.
+9. The Raspberry Pi 3 provides a FastAPI administration dashboard for JOIN requests, approval/rejection, session state, masked key inspection, and KMS-initiated node removal.
+10. Each ESP32 provides a local HTTP interface and serial CLI for status inspection, JOIN requests, leave, and local key inspection.
+11. The management workflow has been validated with approval, rejection, leave/rejoin, and KMS-initiated removal.
+12. The KMS and ESP32 node identities are deterministic in the laboratory configuration.
+13. Mosquitto and the KMS web service start automatically on the Raspberry Pi 3 after boot.
+14. Controlled Raspberry Pi 3 performance evaluation has been completed.
+15. The official 1000-execution ESP32/Bob performance benchmark has been completed on ESP32-01.
+16. After performance testing, ESP32-01 was reflashed with the normal `esp32dev` firmware.
+17. The complete two-node system was functionally revalidated after the performance campaign and is left in the operational configuration intended for thesis-defense demonstration.
 
 The implementation methodology followed by the project is:
 
-\`\`\`text
+```text
 frozen reference implementation
         ↓
 official canonical test vectors
@@ -74,24 +74,28 @@ distributed integration
         ↓
 management-layer validation
         ↓
-performance evaluation
-\`\`\`
+controlled performance evaluation
+        ↓
+final operational revalidation
+```
 
-The controlled Raspberry Pi 3 and ESP32 performance evaluations have been completed. After benchmarking, the ESP32 used for performance testing was reflashed with the operational `esp32dev` firmware, and the complete two-node laboratory deployment was functionally revalidated. The implementation is therefore in its final thesis-defense demonstration state.
+HK17.2 is not presented as a lightweight cryptographic primitive. The embedded experiments demonstrate instead that the protocol is implementable on resource-constrained commodity hardware. Since HK17.2 is a key-establishment mechanism rather than a bulk-data cipher, its computational cost is incurred during session establishment or key renewal rather than continuously on application traffic.
 
 
-**---**
+---
 
-**## Repository structure**
+---
 
-\`\`\`text
+## Repository structure
+
+```text
 HK17.2/
 ├── .gitignore
 ├── attacks/
-│   ├── bernstein\_li-attack.py
-│   ├── cayley\_hamilton-attack.py
-│   ├── exhaustive\_attack.py
-│   └── oB\_cancellation-attack.py
+│   ├── bernstein_li-attack.py
+│   ├── cayley_hamilton-attack.py
+│   ├── exhaustive_attack.py
+│   └── oB_cancellation-attack.py
 ├── esp32/
 │   ├── .gitignore
 │   ├── README.md
@@ -99,72 +103,71 @@ HK17.2/
 │   ├── platformio.ini
 │   ├── sdkconfig.defaults
 │   ├── include/
-│   │   ├── canonical\_vectors.hpp
-│   │   ├── hk17\_math.hpp
-│   │   ├── hk17\_network\_config.hpp
-│   │   ├── hk17\_wire.hpp
-│   │   └── network\_secrets.example.hpp
+│   │   ├── canonical_vectors.hpp
+│   │   ├── hk17_math.hpp
+│   │   ├── hk17_network_config.hpp
+│   │   ├── hk17_wire.hpp
+│   │   └── network_secrets.example.hpp
 │   ├── performance/
-│   │   ├── esp32-2043a86b2794\_performance\_results.csv
-│   │   └── esp32-2043a86b2794\_performance\_summary.csv
+│   │   ├── esp32-2043a86b2794_performance_results.csv
+│   │   └── esp32-2043a86b2794_performance_summary.csv
 │   ├── src/
 │   │   ├── CMakeLists.txt
-│   │   ├── hk17\_math.cpp
-│   │   ├── hk17\_wire.cpp
-│   │   ├── idf\_component.yml
+│   │   ├── hk17_math.cpp
+│   │   ├── hk17_wire.cpp
+│   │   ├── idf_component.yml
 │   │   ├── main.cpp
-│   │   ├── network\_main.cpp
-│   │   └── performance\_main.cpp
+│   │   ├── network_main.cpp
+│   │   └── performance_main.cpp
 │   └── tools/
-│       ├── capture\_performance.py
-│       ├── generate\_canonical\_header.py
+│       ├── capture_performance.py
+│       ├── generate_canonical_header.py
 │       └── requirements.txt
 ├── general/
-│   ├── hk17\_2-v2.py
+│   ├── hk17_2-v2.py
 │   ├── octonions.py
-│   └── test\_vectors/
-│       ├── .gitignore
-│       ├── generate\_test\_vectors.py
+│   └── test_vectors/
+│       ├── generate_test_vectors.py
 │       ├── README.md
 │       ├── SHA256SUMS
-│       ├── test\_vector\_p13.json
-│       ├── test\_vector\_p251.json
-│       ├── test\_vector\_p65521.json
-│       ├── test\_vector\_p4294967279.json
-│       ├── test\_vector\_p18446744073709551557.json
-│       ├── validate\_test\_vectors.py
-│       └── vector\_core.py
+│       ├── test_vector_p13.json
+│       ├── test_vector_p251.json
+│       ├── test_vector_p65521.json
+│       ├── test_vector_p4294967279.json
+│       ├── test_vector_p18446744073709551557.json
+│       ├── validate_test_vectors.py
+│       └── vector_core.py
 ├── old/
-│   ├── hk17\_2-v1.py
+│   ├── hk17_2-v1.py
 │   └── hk17.py
 ├── performance/
-│   ├── performance\_results.csv
-│   ├── performance\_summary.csv
-│   └── performance\_test.py
+│   ├── performance_results.csv
+│   ├── performance_summary.csv
+│   └── performance_test.py
 ├── properties/
-│   ├── non\_commutativity.py
-│   ├── non\_distributibity.py
-│   └── octonion\_times\_inverse.py
+│   ├── non_commutativity.py
+│   ├── non_distributibity.py
+│   └── octonion_times_inverse.py
 ├── raspberry/
 │   ├── README.md
-│   ├── bob\_simulator.py
-│   ├── conformance\_test.py
-│   ├── hk17\_math.py
+│   ├── bob_simulator.py
+│   ├── conformance_test.py
+│   ├── hk17_math.py
 │   ├── kms.py
-│   ├── kms\_server.py
-│   ├── kms\_web.py
+│   ├── kms_server.py
+│   ├── kms_web.py
 │   ├── mosquitto.conf
-│   ├── performance\_test.py
-│   ├── performance\_reference\_results.csv
-│   ├── performance\_reference\_summary.csv
-│   ├── performance\_kms\_results.csv
-│   ├── performance\_kms\_summary.csv
+│   ├── performance_test.py
+│   ├── performance_reference_results.csv
+│   ├── performance_reference_summary.csv
+│   ├── performance_kms_results.csv
+│   ├── performance_kms_summary.csv
 │   ├── requirements.txt
-│   ├── start\_kms.sh
+│   ├── start_kms.sh
 │   ├── web/
 │   │   └── index.html
 │   ├── wire.py
-│   └── wire\_conformance\_test.py
+│   └── wire_conformance_test.py
 ├── security/
 │   ├── analyze_security_results.py
 │   ├── derived_security_summary.csv
@@ -182,222 +185,219 @@ HK17.2/
 │   ├── security_analysis.py
 │   └── security_summary.csv
 └── README.md
-\`\`\`
+```
 
-
-Python \`\_\_pycache\_\_/\` directories are runtime-generated artifacts and are intentionally omitted from the repository map above.
-
-Local/editor and generated artifacts are also excluded from version control, including VS Code \`*.code-workspace\` files, \`.vscode/\`, PlatformIO build output, ESP-IDF \`managed_components/\`, Python virtual environments, logs, and the private Wi-Fi credentials file \`esp32/include/network\_secrets.hpp\`. The public template \`network\_secrets.example.hpp\` remains versioned.
+Python `__pycache__/` directories and other local/generated artifacts are intentionally omitted. In particular, VS Code workspace files, `.vscode/`, PlatformIO build output, ESP-IDF `managed_components/`, Python virtual environments, logs, and `esp32/include/network_secrets.hpp` are excluded from version control. The public credentials template `network_secrets.example.hpp` remains versioned.
 
 The repository uses a single octonion arithmetic module:
 
-\`\`\`text
+```text
 general/octonions.py
-\`\`\`
+```
 
-Scripts located outside \`general/\` that require octonion operations resolve this shared implementation from that directory.
+Scripts located outside `general/` that require octonion operations resolve this shared implementation from that directory.
 
-**## Repository contents**
+## Repository contents
 
-**### Definitive protocol implementation**
+### Definitive protocol implementation
 
-\- \`general/hk17\_2-v2.py\`: definitive and frozen HK17.2 research implementation.
-\- \`general/octonions.py\`: unique octonion arithmetic and auxiliary-function module used by the repository.
+- `general/hk17_2-v2.py`: definitive and frozen HK17.2 research implementation.
+- `general/octonions.py`: unique octonion arithmetic and auxiliary-function module used by the repository.
 
 The definitive protocol implementation is the reference semantics for the project and is not modified for the Raspberry Pi 3 or ESP32 ports. Platform-specific implementations must reproduce its behavior.
 
-**### Canonical test vectors**
+### Canonical test vectors
 
-The \`general/test\_vectors/\` directory contains the official deterministic conformance vectors for the frozen HK17.2 implementation. One canonical vector is provided for each selectable octonion modulus supported by the definitive protocol:
+The `general/test_vectors/` directory contains the official deterministic conformance vectors for the frozen HK17.2 implementation. One canonical vector is provided for each selectable octonion modulus supported by the definitive protocol:
 
-\| Canonical vector | Octonion modulus $p$ | Component size | Octonion polynomial coefficients | Matrix modulus $q$ |
-\|---|---:|---:|---:|---:|
-\| \`test\_vector\_p13.json\` | 13 | 4 bits | 8 | 4 |
-\| \`test\_vector\_p251.json\` | 251 | 8 bits | 16 | 16 |
-\| \`test\_vector\_p65521.json\` | 65521 | 16 bits | 32 | 256 |
-\| \`test\_vector\_p4294967279.json\` | 4294967279 | 32 bits | 64 | 65536 |
-\| \`test\_vector\_p18446744073709551557.json\` | 18446744073709551557 | 64 bits | 128 | 4294967296 |
+| Canonical vector | Octonion modulus $p$ | Component size | Octonion polynomial coefficients | Matrix modulus $q$ |
+|---|---:|---:|---:|---:|
+| `test_vector_p13.json` | 13 | 4 bits | 8 | 4 |
+| `test_vector_p251.json` | 251 | 8 bits | 16 | 16 |
+| `test_vector_p65521.json` | 65521 | 16 bits | 32 | 256 |
+| `test_vector_p4294967279.json` | 4294967279 | 32 bits | 64 | 65536 |
+| `test_vector_p18446744073709551557.json` | 18446744073709551557 | 64 bits | 128 | 4294967296 |
 
-Each vector stores fixed protocol inputs and the expected intermediate and final values for a complete deterministic execution. The stored results cover the matrix polynomial evaluations, matrix powers, matrix tokens \`TA\` and \`TB\`, shared matrices \`MA\` and \`MB\`, the shared matrix \`M\`, the sixteen submatrix sums, the four deterministic \`oB\` candidates, the selected \`oB\`, octonion polynomial evaluations, powered values, self-convolutions, public tokens \`rA\` and \`rB\`, Alice's self-convolution recovered by Bob, and the final session keys.
+Each vector stores fixed protocol inputs and the expected intermediate and final values for a complete deterministic execution. The stored results cover the matrix polynomial evaluations, matrix powers, matrix tokens `TA` and `TB`, shared matrices `MA` and `MB`, the shared matrix `M`, the sixteen submatrix sums, the four deterministic `oB` candidates, the selected `oB`, octonion polynomial evaluations, powered values, self-convolutions, public tokens `rA` and `rB`, Alice's self-convolution recovered by Bob, and the final session keys.
 
 All five vectors have been validated successfully against the frozen reference implementation:
 
-\`\`\`text
-[PASS] test\_vector\_p13.json
-[PASS] test\_vector\_p251.json
-[PASS] test\_vector\_p65521.json
-[PASS] test\_vector\_p4294967279.json
-[PASS] test\_vector\_p18446744073709551557.json
+```text
+[PASS] test_vector_p13.json
+[PASS] test_vector_p251.json
+[PASS] test_vector_p65521.json
+[PASS] test_vector_p4294967279.json
+[PASS] test_vector_p18446744073709551557.json
 
 SUCCESS: all five HK17.2 canonical test vectors match the frozen reference implementation.
-\`\`\`
+```
 
 The five JSON files are now the official canonical HK17.2 test vectors for this project. They are frozen and are not regenerated during normal validation.
 
-\- \`validate\_test\_vectors.py\` loads the fixed inputs from each canonical JSON file, recomputes the protocol operations, and compares the calculated values against the stored expected values.
-\- \`generate\_test\_vectors.py\` is retained for provenance and controlled reconstruction. Regeneration is not part of the normal validation workflow.
-\- \`SHA256SUMS\` stores integrity hashes for the official JSON vectors.
-\- JSON is used only as a machine-readable repository format for the conformance material; it is not part of the HK17.2 communication protocol.
+- `validate_test_vectors.py` loads the fixed inputs from each canonical JSON file, recomputes the protocol operations, and compares the calculated values against the stored expected values.
+- `generate_test_vectors.py` is retained for provenance and controlled reconstruction. Regeneration is not part of the normal validation workflow.
+- `SHA256SUMS` stores integrity hashes for the official JSON vectors.
+- JSON is used only as a machine-readable repository format for the conformance material; it is not part of the HK17.2 communication protocol.
 
 The same canonical vectors are used as the conformance reference for the Raspberry Pi 3/KMS and ESP32 ports. No independent platform-specific test-vector sets are introduced. The Raspberry Pi 3 port, binary wire representation, native C++ port, and both physical ESP32 devices have successfully reproduced the corresponding canonical results.
 
-**### Cryptanalytic experiments**
+### Cryptanalytic experiments
 
-The \`attacks/\` directory contains experimental attacks against the protocol versions for which each attack was designed.
+The `attacks/` directory contains experimental attacks against the protocol versions for which each attack was designed.
 
-\- \`attacks/bernstein\_li-attack.py\`: applies the Bernstein-Li-style linearization analysis to the original HK17 construction and to the definitive HK17.2 v2 construction for comparison.
-\- \`attacks/cayley\_hamilton-attack.py\`: Cayley-Hamilton-type matrix-factor recovery experiment against the definitive HK17.2 v2 matrix layer.
-\- \`attacks/exhaustive\_attack.py\`: exhaustive search over ordered left-associated products of public elements against HK17.2 v1, where \`oB\` is available.
-\- \`attacks/oB\_cancellation-attack.py\`: direct cancellation attack against HK17.2 v1, demonstrating that knowledge of an invertible public \`oB\` enables recovery of the shared key.
+- `attacks/bernstein_li-attack.py`: applies the Bernstein-Li-style linearization analysis to the original HK17 construction and to the definitive HK17.2 v2 construction for comparison.
+- `attacks/cayley_hamilton-attack.py`: Cayley-Hamilton-type matrix-factor recovery experiment against the definitive HK17.2 v2 matrix layer.
+- `attacks/exhaustive_attack.py`: exhaustive search over ordered left-associated products of public elements against HK17.2 v1, where `oB` is available.
+- `attacks/oB_cancellation-attack.py`: direct cancellation attack against HK17.2 v1, demonstrating that knowledge of an invertible public `oB` enables recovery of the shared key.
 
 The target versions are therefore:
 
-\| Attack | Target protocol |
-\|---|---|
-\| Bernstein-Li-style linearization | Original HK17 and HK17.2 v2 |
-\| Cayley-Hamilton-type attack | HK17.2 v2 |
-\| Exhaustive public-element attack | HK17.2 v1 |
-\| \`oB\` cancellation attack | HK17.2 v1 |
+| Attack | Target protocol |
+|---|---|
+| Bernstein-Li-style linearization | Original HK17 and HK17.2 v2 |
+| Cayley-Hamilton-type attack | HK17.2 v2 |
+| Exhaustive public-element attack | HK17.2 v1 |
+| `oB` cancellation attack | HK17.2 v1 |
 
 The exhaustive attack does not enumerate arbitrary octonionic expressions. It evaluates ordered products of lengths 2, 3, and 4 formed from the available public elements using left-associated multiplication.
 
-**### Security analysis**
+### Security analysis
 
-The \`security/\` directory contains the statistical and experimental security analysis of the definitive HK17.2 construction.
+The `security/` directory contains the statistical and experimental security analysis of the definitive HK17.2 construction.
 
 The current analysis includes:
 
-\- shared-matrix coefficient distributions;
-\- deterministic \`oB\` candidate behavior and norm distributions;
-\- candidate-norm correlations;
-\- full octonion-layer intermediate-value analysis;
-\- private-exponent diversity and exponent power classes;
-\- nominal private-parameter spaces;
-\- session-key space and empirical key diversity;
-\- derived security summaries.
+- shared-matrix coefficient distributions;
+- deterministic `oB` candidate behavior and norm distributions;
+- candidate-norm correlations;
+- full octonion-layer intermediate-value analysis;
+- private-exponent diversity and exponent power classes;
+- nominal private-parameter spaces;
+- session-key space and empirical key diversity;
+- derived security summaries.
 
-The generated CSV files contain the raw and summarized experimental results used by the current research analysis. These experiments complement the attack-specific scripts in \`attacks/\`; they do not constitute a formal cryptographic security proof.
+The generated CSV files contain the raw and summarized experimental results used by the current research analysis. These experiments complement the attack-specific scripts in `attacks/`; they do not constitute a formal cryptographic security proof.
 
-**### Algebraic experiments**
+### Algebraic experiments
 
-\- \`properties/non\_commutativity.py\`: experimental verification of octonion non-commutativity.
-\- \`properties/non\_distributibity.py\`: experimental verification that exponentiation does not distribute over octonion multiplication in the tested construction.
-\- \`properties/octonion\_times\_inverse.py\`: experimental verification of multiplication of an octonion by its multiplicative inverse.
+- `properties/non_commutativity.py`: experimental verification of octonion non-commutativity.
+- `properties/non_distributibity.py`: experimental verification that exponentiation does not distribute over octonion multiplication in the tested construction.
+- `properties/octonion_times_inverse.py`: experimental verification of multiplication of an octonion by its multiplicative inverse.
 
-**### Performance evaluation**
+### Performance evaluation
 
-\- \`performance/performance\_test.py\`: benchmark harness for independent executions of \`general/hk17\_2-v2.py\`.
-\- \`performance/performance\_results.csv\`: raw results from the benchmark.
-\- \`performance/performance\_summary.csv\`: statistical summary of the benchmark.
+The repository contains three complementary controlled performance campaigns.
 
-The general-purpose hardware benchmark currently consists of 1000 independent executions of the definitive HK17.2 implementation.
+#### General-purpose PC
 
-\| Metric | Result |
-\|---|---:|
-\| Executions | 1000 |
-\| Successful executions | 1000 |
-\| Observed success rate | 100% |
-\| Mean protocol execution time | 0.128664 s |
-\| Median protocol execution time | 0.128403 s |
-\| Standard deviation | 0.009181 s |
-\| Minimum execution time | 0.101773 s |
-\| Maximum execution time | 0.201470 s |
-\| 95th percentile | 0.141965 s |
+- `performance/performance_test.py`: benchmark harness for independent executions of `general/hk17_2-v2.py`.
+- `performance/performance_results.csv`: raw results.
+- `performance/performance_summary.csv`: statistical summary.
 
-The benchmark was performed on Ubuntu (Xubuntu) 24.04.4 LTS x86\_64 using Python 3.12.3, an Intel Core i7-13620H processor, and 64 GB of RAM. No GPU acceleration was used.
+The general-purpose PC benchmark consists of 1000 independent executions of the definitive HK17.2 implementation.
 
-Controlled performance evaluations have also been completed on the Raspberry Pi 3 and on a physical ESP32.
+| Metric | Result |
+|---|---:|
+| Executions | 1000 |
+| Successful executions | 1000 |
+| Observed success rate | 100% |
+| Mean protocol execution time | 0.128664 s |
+| Median protocol execution time | 0.128403 s |
+| Standard deviation | 0.009181 s |
+| Minimum execution time | 0.101773 s |
+| Maximum execution time | 0.201470 s |
+| 95th percentile | 0.141965 s |
 
-The Raspberry Pi 3 campaign includes the reference-implementation benchmark and the Alice/KMS cryptographic benchmark. The ESP32 campaign includes a 1000-execution Bob-side cryptographic benchmark using the frozen canonical `p=251` workload. Raw measurements and statistical summaries are stored with the corresponding platform implementation.
+The benchmark was performed on Ubuntu (Xubuntu) 24.04.4 LTS x86_64 using Python 3.12.3, an Intel Core i7-13620H processor, and 64 GB of RAM. No GPU acceleration was used.
 
-The embedded measurements deliberately separate local cryptographic execution from network transport so that platform computation can be characterized independently of Wi-Fi, MQTT, HTTP, and browser activity.
+#### Raspberry Pi 3
 
-**#### Raspberry Pi 3 and ESP32 performance artifacts**
+The Raspberry Pi 3 performance harness is:
 
-The final embedded performance campaign is stored with each platform implementation.
-
-Raspberry Pi 3:
-
-\`\`\`text
+```text
 raspberry/performance_test.py
-raspberry/performance_reference_results.csv
-raspberry/performance_reference_summary.csv
-raspberry/performance_kms_results.csv
-raspberry/performance_kms_summary.csv
-\`\`\`
+```
 
-ESP32:
+Two complementary modes were executed:
 
-\`\`\`text
+- `reference`: runs the same frozen reference implementation used by the PC benchmark, permitting a direct platform comparison.
+- `kms`: measures the Alice/KMS cryptographic workload locally while excluding Bob computation, MQTT, Wi-Fi, HTTP, and serialization from the Alice timing.
+
+The generated raw and summary CSV files are stored in `raspberry/`.
+
+#### ESP32
+
+The ESP32 performance implementation is:
+
+```text
 esp32/src/performance_main.cpp
 esp32/tools/capture_performance.py
-esp32/performance/esp32-2043a86b2794_performance_results.csv
-esp32/performance/esp32-2043a86b2794_performance_summary.csv
-\`\`\`
+```
 
-The Raspberry Pi 3 benchmark separates execution of the frozen reference implementation from the Alice/KMS cryptographic workload. The ESP32 benchmark measures Bob-side cryptographic computation locally and excludes Wi-Fi, MQTT, HTTP, and serial-output overhead from the measured interval.
+The official experiment consists of 1000 executions of the frozen canonical `p=251` Bob workload on ESP32-01. Each iteration validates the Bob-side result against the canonical reference while measuring local cryptographic computation only. Wi-Fi, MQTT, HTTP, and serial-output overhead are excluded from the measured cryptographic interval.
 
-The official ESP32 performance experiment uses 1000 executions of the frozen canonical `p=251` workload. Repeating the canonical workload allows timing variability to be attributed to the platform rather than to changing protocol inputs, while every iteration remains tied to the same conformance reference used during implementation validation.
+The benchmark records total Bob execution time and timing for the matrix-polynomial, matrix-exchange, `oB`-derivation, octonion, and key-recovery stages, together with heap information.
 
-After performance testing, the benchmark firmware was removed from the tested ESP32 and the operational `esp32dev` firmware was restored.
+The resulting CSV files are stored in `esp32/performance/`.
 
-**### Embedded and KMS implementations**
+After the performance experiment, ESP32-01 was reflashed with the operational `esp32dev` firmware and the complete two-node system was functionally revalidated.
 
-The distributed implementation preserves the frozen HK17.2 protocol semantics while assigning the Alice role to a Raspberry Pi 3 KMS and the Bob role to two physical ESP32 nodes. Admission control and web/CLI administration are implemented as a separate management plane and do not alter the cryptographic transcript.
+### Embedded and KMS implementations
 
-**#### Raspberry Pi 3 / Alice-KMS**
+The distributed implementation preserves the frozen HK17.2 protocol semantics while assigning the Alice role to a Raspberry Pi 3 KMS and the Bob role to two physical ESP32 nodes. Admission control and web/CLI administration form a separate management plane and do not alter the cryptographic transcript.
 
-The Raspberry Pi 3 implementation is located in \`raspberry/\` and is written in Python. The tested platform uses 64-bit Raspberry Pi OS with Python 3.11.2.
+#### Raspberry Pi 3 / Alice-KMS
+
+The Raspberry Pi 3 implementation is located in `raspberry/` and is written in Python. The tested platform uses 64-bit Raspberry Pi OS with Python 3.11.2.
 
 The KMS implementation includes:
 
-\- the independent Alice-side HK17.2 mathematical port;
-\- in-memory session management;
-\- binary serialization and deserialization of protocol values;
-\- an MQTT-based network service;
-\- support for multiple independent ESP32 nodes;
-\- canonical-vector conformance tests;
-\- a Python Bob simulator retained as a development and diagnostic tool;
-\- a FastAPI administration interface exposed by \`kms\_web.py\`;
-\- explicit node states and pending JOIN requests;
-\- operator approval and rejection of admission requests;
-\- masked session-key visualization with explicit Show/Hide control;
-\- KMS-initiated node removal as a management-plane operation;
-\- \`start\_kms.sh\` for unattended Raspberry Pi startup.
+- the independent Alice-side HK17.2 mathematical port;
+- in-memory session management;
+- binary serialization and deserialization of protocol values;
+- an MQTT-based network service;
+- support for multiple independent ESP32 nodes;
+- canonical-vector conformance tests;
+- a Python Bob simulator retained for development and diagnostics;
+- a FastAPI administration dashboard exposed by `kms_web.py`;
+- explicit pending JOIN requests and operator approval/rejection;
+- masked session-key visualization with Show/Hide control;
+- KMS-initiated node removal as a management-plane operation;
+- unattended startup through `start_kms.sh`.
 
-The Raspberry Pi 3 implementation successfully reproduces all five official canonical vectors. The binary wire representation also passes the same five-vector conformance suite.
+The Raspberry Pi 3 implementation reproduces all five official canonical vectors. The binary wire representation also passes the same five-vector conformance suite.
 
-The operational KMS web process is \`raspberry/kms\_web.py\`. It runs the MQTT Alice/KMS service and the administration web interface in the same process. The standalone \`kms\_server.py\` remains useful for lower-level development, but it intentionally has no operator approval UI.
+The normal operational entry point is `raspberry/kms_web.py`. The standalone `kms_server.py` remains available for lower-level development and diagnostics.
 
-**#### ESP32 / Bob**
+#### ESP32 / Bob
 
-The ESP32 implementation is located in \`esp32/\` and is written in C++ using PlatformIO and ESP-IDF. Both physical boards use the same firmware. Each node derives its runtime \`device\_id\` from its hardware MAC address, so separate firmware images are not required for the two devices.
+The ESP32 implementation is located in `esp32/` and is written in C++ using PlatformIO and ESP-IDF. Both physical boards use the same firmware image and derive their runtime `device_id` values from their hardware MAC addresses.
 
-The project provides three PlatformIO environments:
+The principal PlatformIO environments are:
 
-\- \`native\`: executes the Bob C++ conformance implementation on the development PC;
-\- \`conformance\`: executes the five canonical test vectors on an ESP32;
-\- \`esp32dev\`: builds the distributed Wi-Fi/MQTT Bob implementation.
+- `native`: Bob conformance implementation on the development PC;
+- `conformance`: five-vector conformance firmware on physical ESP32 hardware;
+- `esp32dev`: operational distributed Wi-Fi/MQTT/HTTP Bob implementation;
+- `performance-smoke`: short five-execution performance validation;
+- `performance`: official 1000-execution local cryptographic benchmark.
 
-The native C++ implementation and both physical ESP32 devices successfully reproduce all five official HK17.2 canonical test vectors, including the 64-bit octonion-modulus configuration.
+The operational ESP32 firmware provides:
 
-The distributed ESP32 firmware also provides:
+- local HTTP administration on TCP port 80;
+- Wi-Fi, MQTT, IP, device-ID, and network-state information;
+- `Request network join`;
+- `Leave network`;
+- masked local `kB` visualization;
+- a serial CLI with `help`, `status`, `join`, `leave`, and `show-key`;
+- processing of KMS-issued administrative removal commands.
 
-\- a local HTTP administration page on TCP port 80;
-\- current Wi-Fi, MQTT, node-state, IP-address, and device-ID information;
-\- a \`Request network join\` operation;
-\- a \`Leave network\` operation;
-\- masked local session-key visualization with explicit Show/Hide control;
-\- a serial CLI with \`help\`, \`status\`, \`join\`, \`leave\`, and \`show-key\`;
-\- processing of KMS-issued administrative removal commands.
+The KMS dashboard displays Alice's locally derived `kA`, while the ESP32 displays Bob's locally derived `kB`. The values can therefore be compared experimentally without transmitting the session key through MQTT.
 
-The session key displayed by an ESP32 is its locally derived Bob key \`kB\`. The KMS dashboard displays its independently derived Alice key \`kA\`. The two values can therefore be compared experimentally without sending either session key through MQTT.
+#### Admission and management workflow
 
-**#### Management and admission workflow**
+A connected ESP32 does not automatically execute HK17.2. After Wi-Fi and MQTT connectivity are established, the node remains outside the HK17.2 session until an operator requests admission.
 
-A connected ESP32 does not automatically execute HK17.2. After Wi-Fi and MQTT connectivity are established, the node remains in \`NOT_JOINED\` until an operator requests admission.
-
-\`\`\`text
+```text
 NOT_JOINED
     ↓
 PENDING_APPROVAL
@@ -405,15 +405,15 @@ PENDING_APPROVAL
     └── KEY_EXCHANGE
             ↓
         ESTABLISHED
-\`\`\`
+```
 
-The management plane provides JOIN request, approval/rejection, node-initiated leave, rejoin, and KMS-initiated removal operations. These operations control when an HK17.2 session exists; they are not cryptographic steps of HK17.2 itself.
+JOIN, approval/rejection, node-initiated leave, rejoin, and KMS-initiated removal are management operations outside the frozen HK17.2 cryptographic transcript.
 
-**#### Distributed HK17.2 exchange**
+#### Distributed HK17.2 exchange
 
-After a JOIN request is approved, the frozen HK17.2 exchange begins unchanged:
+After approval, the cryptographic exchange remains:
 
-\`\`\`text
+```text
 ESP32 / Bob                         Raspberry Pi 3 / Alice-KMS
 
               <------------- A, B, q, u, v
@@ -425,412 +425,387 @@ TB ------------------------------->
               <------------- rA
 
 rB ------------------------------->
-\`\`\`
+```
 
-The payload representation is binary. JSON is not used on the network.
+The HK17.2 MQTT payload representation is binary. JSON is not used for the cryptographic MQTT transcript.
 
-Only the protocol values required by the frozen public transcript are transported. In particular, the following values are **\*\*not\*\*** transmitted:
+Only the public protocol values required by the frozen transcript are transported. In particular, the following values are **not** transmitted:
 
-\- the session key \`kA\` / \`kB\`;
-\- the shared octonion \`oB\`;
-\- the shared matrix \`M\`;
-\- private matrix polynomials \`g(x)\` and \`j(x)\`;
-\- private octonion polynomials \`f(x)\` and \`h(x)\`;
-\- private exponents \`m\` and \`n\`;
-\- secret displacements \`oS1\` and \`oS2\`;
-\- private self-convolution values.
+- the session key `kA` / `kB`;
+- the shared octonion `oB`;
+- the shared matrix `M`;
+- private matrix polynomials `g(x)` and `j(x)`;
+- private octonion polynomials `f(x)` and `h(x)`;
+- private exponents `m` and `n`;
+- secret displacements `oS1` and `oS2`;
+- private self-convolution values.
 
-Alice and Bob derive the session key independently. Real exchanges were completed successfully between the Raspberry Pi 3 KMS and both physical ESP32 nodes, with matching locally derived keys at both endpoints.
+Alice and Bob derive the session key independently.
 
-The web interfaces may reveal the locally stored key to the operator on explicit request. This visualization belongs to the laboratory administration plane and is independent of the MQTT HK17.2 transcript.
+#### Current laboratory network
 
-**#### Current laboratory network**
+| Component | Address / configuration |
+|---|---|
+| SSID | `JFCrypT-Lab` |
+| Subnet | `192.168.1.0/24` |
+| Gateway / access point | `192.168.1.1` |
+| Raspberry Pi 3 / KMS | DHCP reservation: `192.168.1.40` |
+| ESP32-01 | DHCP reservation: `192.168.1.75` |
+| ESP32-02 | DHCP reservation: `192.168.1.85` |
+| Wi-Fi channel | 6 |
+| Channel width | 20 MHz |
+| Configured maximum Tx rate | 130 Mbps |
+| Wireless security | WPA2-PSK / AES |
 
-\| Component | Address / configuration |
-\|---|---|
-\| SSID | \`JFCrypT-Lab\` |
-\| Subnet | \`192.168.1.0/24\` |
-\| Gateway / access point | \`192.168.1.1\` |
-\| Raspberry Pi 3 / KMS | DHCP reservation: \`192.168.1.40\` |
-\| ESP32-01 | DHCP reservation: \`192.168.1.75\` |
-\| ESP32-02 | DHCP reservation: \`192.168.1.85\` |
-\| Wi-Fi channel | 6 |
-\| Channel width | 20 MHz |
-\| Configured maximum Tx rate | 130 Mbps |
-\| Wireless security | WPA2-PSK / AES |
+The Raspberry Pi 3 and both ESP32 devices remain DHCP clients. Stable addresses are provided by MAC-based DHCP reservations rather than hardcoded per-device addresses in the ESP32 firmware.
 
-The Raspberry Pi and ESP32 nodes remain DHCP clients. Stable laboratory addresses are provided by MAC-based DHCP reservations in the access point rather than hardcoded per-device IP addresses in the ESP32 firmware. The Wi-Fi password is intentionally absent from the repository and exists only in the ignored local \`network\_secrets.hpp\` file.
+The administration endpoints are:
 
-\`\`\`text
+```text
 KMS dashboard: http://192.168.1.40:8000/
 ESP32-01:      http://192.168.1.75/
 ESP32-02:      http://192.168.1.85/
 MQTT broker:   192.168.1.40:1883
-\`\`\`
+```
 
-The KMS dashboard uses HTTP port 8000. Each ESP32 uses the standard HTTP port 80, so no explicit port is required in its browser URL.
+The KMS process uses `127.0.0.1:1883` as its local loopback connection to the same Mosquitto broker that the ESP32 nodes reach through `192.168.1.40:1883`.
 
-No additional cryptographic layer has been introduced into HK17.2 by the embedded port. The implementation is intended to preserve the protocol sequence and algebraic behavior of the frozen reference implementation.
+No additional cryptographic layer has been introduced into HK17.2 by the embedded port.
 
+### Historical protocol implementations
 
-**### Historical protocol implementations**
+The `old/` directory contains previous versions retained for historical comparison, reproducibility, and cryptanalytic experiments.
 
-The \`old/\` directory contains previous versions retained for historical comparison, reproducibility, and cryptanalytic experiments.
+- `old/hk17.py`: original HK17 protocol implementation.
+- `old/hk17_2-v1.py`: first HK17.2 development version, in which `oB` is available to the adversary model used by the corresponding attacks.
 
-\- \`old/hk17.py\`: original HK17 protocol implementation.
-\- \`old/hk17\_2-v1.py\`: first HK17.2 development version, in which \`oB\` is available to the adversary model used by the corresponding attacks.
-
-**## Running the code**
+## Running the code
 
 From the repository root, run the definitive protocol with:
 
-\`\`\`bash
-/usr/bin/python3 general/hk17\_2-v2.py
-\`\`\`
+```bash
+/usr/bin/python3 general/hk17_2-v2.py
+```
 
 Validate the five official canonical test vectors with:
 
-\`\`\`bash
-/usr/bin/python3 general/test\_vectors/validate\_test\_vectors.py
-\`\`\`
+```bash
+/usr/bin/python3 general/test_vectors/validate_test_vectors.py
+```
 
 Verify the integrity hashes of the canonical JSON files with:
 
-\`\`\`bash
-cd general/test\_vectors
+```bash
+cd general/test_vectors
 sha256sum -c SHA256SUMS
 cd ../..
-\`\`\`
+```
 
 The normal conformance workflow is validation only. The official JSON vectors must not be regenerated during routine testing.
 
 Run the algebraic-property experiments with:
 
-\`\`\`bash
-/usr/bin/python3 properties/non\_commutativity.py
-/usr/bin/python3 properties/non\_distributibity.py
-/usr/bin/python3 properties/octonion\_times\_inverse.py
-\`\`\`
+```bash
+/usr/bin/python3 properties/non_commutativity.py
+/usr/bin/python3 properties/non_distributibity.py
+/usr/bin/python3 properties/octonion_times_inverse.py
+```
 
 Run the cryptanalytic experiments with:
 
-\`\`\`bash
-/usr/bin/python3 attacks/bernstein\_li-attack.py
-/usr/bin/python3 attacks/exhaustive\_attack.py
-/usr/bin/python3 attacks/oB\_cancellation-attack.py
-/usr/bin/python3 attacks/cayley\_hamilton-attack.py
-\`\`\`
+```bash
+/usr/bin/python3 attacks/bernstein_li-attack.py
+/usr/bin/python3 attacks/exhaustive_attack.py
+/usr/bin/python3 attacks/oB_cancellation-attack.py
+/usr/bin/python3 attacks/cayley_hamilton-attack.py
+```
 
 The Cayley-Hamilton-type experiment targets an exhaustive coefficient space of
 
-\`\`\`math
+```math
 16^{32}=2^{128}.
-\`\`\`
+```
 
-for the definitive $32\times32$ matrix construction over $\mathbb{Z}\_{16}$ and is therefore not expected to complete by exhaustive enumeration.
+for the definitive $32\times32$ matrix construction over $\mathbb{Z}_{16}$ and is therefore not expected to complete by exhaustive enumeration.
 
 Run the performance benchmark with:
 
-\`\`\`bash
-/usr/bin/python3 performance/performance\_test.py
-\`\`\`
+```bash
+/usr/bin/python3 performance/performance_test.py
+```
 
-The benchmark invokes the definitive implementation located in \`general/\` and writes its CSV results to \`performance/\`.
+The benchmark invokes the definitive implementation located in `general/` and writes its CSV results to `performance/`.
 
 
-**### Raspberry Pi 3 / KMS**
+### Raspberry Pi 3 / KMS
 
 Create the Raspberry Pi virtual environment and install its Python dependencies:
 
-\`\`\`bash
+```bash
 cd ~/Documents/Proyectos/HK17.2
 python3 -m venv raspberry/.venv
 source raspberry/.venv/bin/activate
 python -m pip install -r raspberry/requirements.txt
-\`\`\`
+```
 
 Validate the Alice/KMS port and binary wire representation:
 
-\`\`\`bash
-python3 raspberry/conformance\_test.py
-python3 raspberry/wire\_conformance\_test.py
-\`\`\`
+```bash
+python3 raspberry/conformance_test.py
+python3 raspberry/wire_conformance_test.py
+```
 
-For manual operation, ensure that a second Mosquitto system instance is not competing for TCP port 1883:
+For manual laboratory operation, run the project Mosquitto configuration:
 
-\`\`\`bash
-sudo systemctl disable --now mosquitto
-\`\`\`
-
-Run the project broker:
-
-\`\`\`bash
-cd ~/Documents/Proyectos/HK17.2
+```bash
 mosquitto -c raspberry/mosquitto.conf -v
-\`\`\`
+```
 
-In another terminal, start the operational KMS and administration dashboard:
+In another terminal, start the operational KMS and dashboard:
 
-\`\`\`bash
+```bash
 cd ~/Documents/Proyectos/HK17.2
 source raspberry/.venv/bin/activate
-python3 raspberry/kms\_web.py
-\`\`\`
+python3 raspberry/kms_web.py
+```
 
 The dashboard is available over plain HTTP at:
 
-\`\`\`text
+```text
 http://192.168.1.40:8000/
-\`\`\`
+```
 
-The repository also provides \`raspberry/start\_kms.sh\`, which starts the project Mosquitto broker and \`kms\_web.py\` for unattended operation. On the laboratory Raspberry Pi it can be registered with:
+For unattended startup, `raspberry/start_kms.sh` is executable and the laboratory Raspberry Pi uses the local cron entry:
 
-\`\`\`bash
-chmod +x raspberry/start\_kms.sh
-crontab -e
-\`\`\`
+```cron
+@reboot /bin/bash /home/jfcrypt/Documents/Proyectos/HK17.2/raspberry/start_kms.sh
+```
 
-using:
+The system Mosquitto service is disabled so that the project broker configuration is the instance listening on the laboratory LAN.
 
-\`\`\`cron
-@reboot /bin/bash /home/jfcrypt/Documents/Proyectos/HK17.2/raspberry/start\_kms.sh
-\`\`\`
+`bob_simulator.py` remains available for diagnostics, but the validated final deployment uses the two physical ESP32 nodes.
 
-Startup logs are written under \`raspberry/logs/\` and are ignored by Git.
+### ESP32 / PlatformIO
 
-\`bob\_simulator.py\` can still be used from another host for diagnostic testing, but the validated distributed configuration uses physical ESP32 nodes.
+`esp32/include/network_secrets.hpp` is a local untracked file derived from `network_secrets.example.hpp` and contains the laboratory Wi-Fi credentials. It must never be committed.
 
+From `esp32/`, run the native conformance test with:
 
-**### ESP32 / PlatformIO**
-
-\`esp32/include/network\_secrets.hpp\` is a local untracked file derived from \`network\_secrets.example.hpp\` and contains the laboratory Wi-Fi credentials. It must not be committed.
-
-The current local configuration uses the SSID \`JFCrypT-Lab\`. The KMS/MQTT endpoint configured in the versioned network configuration is:
-
-\`\`\`text
-mqtt://192.168.1.40:1883
-\`\`\`
-
-From the \`esp32/\` directory, run the native C++ conformance test with:
-
-\`\`\`bash
+```bash
 pio run -e native
 .pio/build/native/program
-\`\`\`
+```
 
-Build and execute the canonical-vector conformance firmware on an ESP32 with:
+Build and run the canonical-vector conformance firmware on an ESP32 with:
 
-\`\`\`bash
+```bash
 pio run -e conformance
 pio run -e conformance -t upload --upload-port /dev/ttyUSB0
 pio device monitor -p /dev/ttyUSB0 -b 115200
-\`\`\`
+```
 
-Build the distributed Wi-Fi/MQTT/HTTP firmware with:
+Build the operational distributed firmware with:
 
-\`\`\`bash
+```bash
 pio run -e esp32dev
-\`\`\`
+```
 
-Upload the same firmware image to either physical ESP32 by selecting the corresponding serial port:
+Upload the same image to either physical ESP32 using its current serial port:
 
-\`\`\`bash
+```bash
 pio run -e esp32dev -t upload --upload-port /dev/ttyUSB0
 pio run -e esp32dev -t upload --upload-port /dev/ttyUSB1
-\`\`\`
+```
 
-The two physical nodes use the same firmware image and are distinguished at runtime by their MAC-derived \`device\_id\`. Their laboratory IP addresses are supplied by DHCP reservations, not by separate firmware builds.
+The serial device names may change after USB reconnection; identify the correct board before uploading.
 
-\`\`\`text
+The final defense configuration leaves both physical nodes running `esp32dev`, not the `conformance` or `performance` firmware.
+
+The current web interfaces are:
+
+```text
 ESP32-01: http://192.168.1.75/
 ESP32-02: http://192.168.1.85/
-\`\`\`
+```
 
-The serial CLI accepts:
+## Status
 
-\`\`\`text
-help
-status
-join
-leave
-show-key
-\`\`\`
+This repository is an academic research prototype intended for protocol specification, algebraic experimentation, cryptanalytic analysis, numerical examples, cross-platform implementation, embedded-system validation, controlled performance measurement, and reproducibility of research results.
 
+The current implementation has been validated functionally on a general-purpose PC, Raspberry Pi 3, and two physical ESP32 devices. Controlled performance evaluation has been completed on the PC, Raspberry Pi 3, and ESP32. After the performance campaign, the tested ESP32 was restored to the normal distributed firmware and the complete laboratory configuration was revalidated.
 
-**## Status**
+The final operational laboratory state is the configuration intended for thesis-defense demonstration.
 
-This repository is an academic research prototype intended for protocol specification, algebraic experimentation, cryptanalytic analysis, numerical examples, cross-platform implementation, embedded-system validation, and reproducibility of research results.
+HK17.2 has not been designed, audited, or approved for production cryptographic use.
 
-The current implementation has been validated functionally on a general-purpose PC, Raspberry Pi 3, and two physical ESP32 devices. Controlled performance evaluation has also been completed on the PC, Raspberry Pi 3, and ESP32. The final laboratory deployment has been returned to the operational two-node configuration and revalidated for thesis-defense demonstration. The software remains an academic research prototype and has not been designed, audited, or approved for production cryptographic use.
+## Complete numerical example
 
-**## Complete numerical example**
+This section gives a complete reproducible numerical execution of the definitive HK17.2 research implementation. The purpose of the example is to expose every intermediate value needed to inspect the matrix exchange, the deterministic construction of the private shared octonion `oB`, the octonion tokens, and the final session key.
 
-This section gives a complete reproducible numerical execution of the definitive HK17.2 research implementation. The purpose of the example is to expose every intermediate value needed to inspect the matrix exchange, the deterministic construction of the private shared octonion \`oB\`, the octonion tokens, and the final session key.
+> **Important:** private values are intentionally disclosed in this section only for academic reproducibility. In an actual protocol execution, the private matrix polynomials, private octonion polynomials, private exponents, secret displacements, evaluated private matrices, shared matrix, and derived octonion `oB` are not part of the public transcript.
 
-\> **\*\*Important:\*\*** private values are intentionally disclosed in this section only for academic reproducibility. In an actual protocol execution, the private matrix polynomials, private octonion polynomials, private exponents, secret displacements, evaluated private matrices, shared matrix, and derived octonion \`oB\` are not part of the public transcript.
+### Numerical parameters
 
-**### Numerical parameters**
-
-\| Parameter | Value |
-\|---|---:|
-\| Octonion modulus $p$ | $251$ |
-\| Maximum exponent bound | $257$ |
-\| Octonion coefficient size | $8$ bits |
-\| Octonion polynomial coefficients | $16$ |
-\| Highest octonion-polynomial power | $15$ |
-\| Matrix dimension | $32\times32$ |
-\| Matrix coefficient size | $4$ bits |
-\| Matrix modulus $q$ | $16$ |
-\| Matrix polynomial coefficients | $32$ |
-\| Highest matrix-polynomial power | $31$ |
-\| Submatrix grid | $4\times4$ |
-\| Submatrix dimension | $8\times8$ |
-\| Public matrix exponent $u$ | $18$ |
-\| Public matrix exponent $v$ | $252$ |
-\| Alice private octonion exponent $m$ | $100$ |
-\| Bob private octonion exponent $n$ | $191$ |
+| Parameter | Value |
+|---|---:|
+| Octonion modulus $p$ | $251$ |
+| Maximum exponent bound | $257$ |
+| Octonion coefficient size | $8$ bits |
+| Octonion polynomial coefficients | $16$ |
+| Highest octonion-polynomial power | $15$ |
+| Matrix dimension | $32\times32$ |
+| Matrix coefficient size | $4$ bits |
+| Matrix modulus $q$ | $16$ |
+| Matrix polynomial coefficients | $32$ |
+| Highest matrix-polynomial power | $31$ |
+| Submatrix grid | $4\times4$ |
+| Submatrix dimension | $8\times8$ |
+| Public matrix exponent $u$ | $18$ |
+| Public matrix exponent $v$ | $252$ |
+| Alice private octonion exponent $m$ | $100$ |
+| Bob private octonion exponent $n$ | $191$ |
 
 The matrix stage is performed in
 
-\`\`\`math
-M\_{32}(\mathbb{Z}\_{16}),
-\`\`\`
+```math
+M_{32}(\mathbb{Z}_{16}),
+```
 
 whereas the octonion stage is performed over modular octonions with coefficients in
 
-\`\`\`math
-\mathbb{Z}\_{251}.
-\`\`\`
+```math
+\mathbb{Z}_{251}.
+```
 
 All matrix products and matrix polynomial evaluations are reduced modulo $q=16$. All octonion operations are reduced modulo $p=251$.
 
-**### 1. Private polynomials**
+### 1. Private polynomials
 
 Alice's private octonion polynomial is
 
-\`\`\`math
+```math
 \begin{aligned}
-f(x)={}&72\cdot x^{15}+36\cdot x^{14}+149\cdot x^{13}+107\cdot x^{12}+63\cdot x^{11}+103\cdot x^{10}\\\\
-&+152\cdot x^9+166\cdot x^8+48\cdot x^7+65\cdot x^6+222\cdot x^5+37\cdot x^4\\\\
+f(x)={}&72\cdot x^{15}+36\cdot x^{14}+149\cdot x^{13}+107\cdot x^{12}+63\cdot x^{11}+103\cdot x^{10}\\
+&+152\cdot x^9+166\cdot x^8+48\cdot x^7+65\cdot x^6+222\cdot x^5+37\cdot x^4\\
 &+186\cdot x^3+64\cdot x^2+114\cdot x+73.
 \end{aligned}
-\`\`\`
+```
 
 Bob's private octonion polynomial is
 
-\`\`\`math
+```math
 \begin{aligned}
-h(x)={}&200\cdot x^{15}+45\cdot x^{14}+134\cdot x^{13}+87\cdot x^{12}+177\cdot x^{11}+172\cdot x^{10}\\\\
-&+194\cdot x^9+161\cdot x^8+194\cdot x^7+108\cdot x^6+14\cdot x^5+120\cdot x^4\\\\
+h(x)={}&200\cdot x^{15}+45\cdot x^{14}+134\cdot x^{13}+87\cdot x^{12}+177\cdot x^{11}+172\cdot x^{10}\\
+&+194\cdot x^9+161\cdot x^8+194\cdot x^7+108\cdot x^6+14\cdot x^5+120\cdot x^4\\
 &+234\cdot x^3+88\cdot x^2+10\cdot x+212.
 \end{aligned}
-\`\`\`
+```
 
 Alice's private matrix polynomial is
 
-\`\`\`math
+```math
 \begin{aligned}
-g(x)={}&7\cdot x^{31}+3\cdot x^{30}+3\cdot x^{29}+8\cdot x^{28}+5\cdot x^{27}+15\cdot x^{26}+6\cdot x^{25}+5\cdot x^{24}\\\\
-&+3\cdot x^{23}+12\cdot x^{22}+11\cdot x^{21}+15\cdot x^{20}+7\cdot x^{19}+14\cdot x^{18}+6\cdot x^{17}+1\cdot x^{16}\\\\
-&+6\cdot x^{15}+7\cdot x^{14}+12\cdot x^{13}+14\cdot x^{12}+4\cdot x^{11}+3\cdot x^{10}+1\cdot x^9+2\cdot x^8\\\\
+g(x)={}&7\cdot x^{31}+3\cdot x^{30}+3\cdot x^{29}+8\cdot x^{28}+5\cdot x^{27}+15\cdot x^{26}+6\cdot x^{25}+5\cdot x^{24}\\
+&+3\cdot x^{23}+12\cdot x^{22}+11\cdot x^{21}+15\cdot x^{20}+7\cdot x^{19}+14\cdot x^{18}+6\cdot x^{17}+1\cdot x^{16}\\
+&+6\cdot x^{15}+7\cdot x^{14}+12\cdot x^{13}+14\cdot x^{12}+4\cdot x^{11}+3\cdot x^{10}+1\cdot x^9+2\cdot x^8\\
 &+14\cdot x^7+9\cdot x^6+14\cdot x^5+4\cdot x^4+1\cdot x^3+6\cdot x^2+10\cdot x+6
 \pmod{16}.
 \end{aligned}
-\`\`\`
+```
 
 Bob's private matrix polynomial is
 
-\`\`\`math
+```math
 \begin{aligned}
-j(x)={}&4\cdot x^{31}+1\cdot x^{30}+12\cdot x^{29}+9\cdot x^{28}+6\cdot x^{27}+7\cdot x^{26}+11\cdot x^{25}+7\cdot x^{24}\\\\
-&+14\cdot x^{23}+2\cdot x^{22}+5\cdot x^{21}+4\cdot x^{20}+4\cdot x^{19}+3\cdot x^{18}+3\cdot x^{17}+4\cdot x^{16}\\\\
-&+8\cdot x^{15}+14\cdot x^{14}+14\cdot x^{13}+13\cdot x^{12}+11\cdot x^{11}+11\cdot x^{10}+5\cdot x^9+11\cdot x^8\\\\
+j(x)={}&4\cdot x^{31}+1\cdot x^{30}+12\cdot x^{29}+9\cdot x^{28}+6\cdot x^{27}+7\cdot x^{26}+11\cdot x^{25}+7\cdot x^{24}\\
+&+14\cdot x^{23}+2\cdot x^{22}+5\cdot x^{21}+4\cdot x^{20}+4\cdot x^{19}+3\cdot x^{18}+3\cdot x^{17}+4\cdot x^{16}\\
+&+8\cdot x^{15}+14\cdot x^{14}+14\cdot x^{13}+13\cdot x^{12}+11\cdot x^{11}+11\cdot x^{10}+5\cdot x^9+11\cdot x^8\\
 &+5\cdot x^7+11\cdot x^6+4\cdot x^5+6\cdot x^4+15\cdot x^3+7\cdot x^2+6\cdot x+10
 \pmod{16}.
 \end{aligned}
-\`\`\`
+```
 
-**### 2. Polynomial matrix exchange**
+### 2. Polynomial matrix exchange
 
-Let $A,B\in M\_{32}(\mathbb{Z}\_{16})$ be the non-zero public matrices shown in full below.
+Let $A,B\in M_{32}(\mathbb{Z}_{16})$ be the non-zero public matrices shown in full below.
 
 Alice evaluates
 
-\`\`\`math
-G=g(A)=\sum\_{i=0}^{31}g\_i\cdot A^i \pmod{16}
-\`\`\`
+```math
+G=g(A)=\sum_{i=0}^{31}g_i\cdot A^i \pmod{16}
+```
 
 and Bob evaluates
 
-\`\`\`math
-J=j(A)=\sum\_{i=0}^{31}j\_i\cdot A^i \pmod{16}.
-\`\`\`
+```math
+J=j(A)=\sum_{i=0}^{31}j_i\cdot A^i \pmod{16}.
+```
 
 Alice computes the public matrix token
 
-\`\`\`math
-T\_A=G^u\cdot B\cdot G^v
-   \=G^{18}\cdot B\cdot G^{252}
+```math
+T_A=G^u\cdot B\cdot G^v
+   =G^{18}\cdot B\cdot G^{252}
    \pmod{16},
-\`\`\`
+```
 
 and Bob computes
 
-\`\`\`math
-T\_B=J^u\cdot B\cdot J^v
-   \=J^{18}\cdot B\cdot J^{252}
+```math
+T_B=J^u\cdot B\cdot J^v
+   =J^{18}\cdot B\cdot J^{252}
    \pmod{16}.
-\`\`\`
+```
 
 Alice then obtains
 
-\`\`\`math
+```math
 \begin{aligned}
-M\_A
-&=G^u\cdot T\_B\cdot G^v \pmod{16}\\\\
+M_A
+&=G^u\cdot T_B\cdot G^v \pmod{16}\\
 &=G^u\cdot J^u\cdot B\cdot J^v\cdot G^v \pmod{16},
 \end{aligned}
-\`\`\`
+```
 
 while Bob obtains
 
-\`\`\`math
+```math
 \begin{aligned}
-M\_B
-&=J^u\cdot T\_A\cdot J^v \pmod{16}\\\\
+M_B
+&=J^u\cdot T_A\cdot J^v \pmod{16}\\
 &=J^u\cdot G^u\cdot B\cdot G^v\cdot J^v \pmod{16}.
 \end{aligned}
-\`\`\`
+```
 
 Because $G=g(A)$ and $J=j(A)$ are polynomial functions of the same matrix $A$,
 
-\`\`\`math
+```math
 G\cdot J=J\cdot G,
-\`\`\`
+```
 
 and therefore
 
-\`\`\`math
+```math
 G^u\cdot J^u=J^u\cdot G^u,
 \qquad
 J^v\cdot G^v=G^v\cdot J^v.
-\`\`\`
+```
 
 Hence both participants derive exactly the same secret matrix:
 
-\`\`\`math
-\boxed{M\_A=M\_B=M}.
-\`\`\`
+```math
+\boxed{M_A=M_B=M}.
+```
 
-**### 3. Full $32\times32$ matrix data**
+### 3. Full $32\times32$ matrix data
 
 The following blocks contain the complete numerical matrix values for this execution. They are collapsed by default only to keep the README readable.
 
 
-\<details>
-\<summary>\<strong>Public matrix A\</strong>\</summary>
+<details>
+<summary><strong>Public matrix A</strong></summary>
 
-\`\`\`text
+```text
 A =
     (0, 9, 5, 9, 4, 6, 4, 12, 0, 10, 13, 1, 8, 14, 1, 1, 13, 3, 2, 13, 14, 4, 2, 12, 4, 2, 6, 11, 0, 7, 0, 14)
     (7, 9, 11, 15, 5, 3, 8, 4, 8, 10, 3, 0, 6, 11, 15, 2, 4, 8, 1, 2, 5, 2, 15, 6, 0, 2, 13, 1, 8, 4, 11, 3)
@@ -864,14 +839,14 @@ A =
     (0, 12, 4, 2, 5, 3, 13, 10, 5, 9, 8, 7, 1, 8, 12, 8, 1, 2, 0, 1, 0, 13, 3, 4, 11, 0, 6, 8, 5, 9, 2, 7)
     (1, 8, 6, 12, 6, 5, 0, 14, 3, 9, 14, 0, 8, 3, 10, 5, 6, 0, 14, 15, 11, 6, 6, 11, 2, 4, 9, 8, 8, 4, 6, 9)
     (8, 11, 4, 9, 5, 7, 5, 12, 14, 3, 12, 15, 7, 11, 13, 6, 3, 6, 8, 9, 7, 8, 13, 4, 7, 3, 2, 1, 10, 10, 5, 14)
-\`\`\`
+```
 
-\</details>
+</details>
 
-\<details>
-\<summary>\<strong>Public matrix B\</strong>\</summary>
+<details>
+<summary><strong>Public matrix B</strong></summary>
 
-\`\`\`text
+```text
 B =
     (10, 8, 2, 9, 5, 0, 8, 6, 6, 8, 13, 6, 6, 11, 14, 4, 5, 6, 3, 12, 9, 9, 11, 13, 15, 1, 1, 13, 0, 5, 2, 2)
     (8, 5, 4, 8, 10, 3, 14, 7, 13, 13, 13, 10, 14, 5, 2, 14, 10, 1, 0, 10, 14, 8, 4, 11, 1, 12, 4, 5, 7, 12, 14, 12)
@@ -905,14 +880,14 @@ B =
     (1, 8, 1, 3, 11, 2, 15, 9, 10, 13, 8, 8, 13, 13, 5, 7, 6, 6, 5, 9, 0, 13, 6, 0, 2, 4, 10, 2, 14, 0, 1, 5)
     (1, 2, 14, 12, 14, 14, 6, 1, 10, 11, 3, 15, 7, 4, 1, 12, 9, 7, 11, 4, 5, 7, 15, 14, 7, 12, 13, 2, 14, 7, 8, 15)
     (0, 10, 15, 9, 13, 10, 7, 12, 13, 8, 6, 3, 14, 14, 3, 11, 7, 1, 7, 13, 9, 11, 1, 4, 13, 5, 15, 0, 10, 7, 9, 15)
-\`\`\`
+```
 
-\</details>
+</details>
 
-\<details>
-\<summary>\<strong>Alice private evaluated matrix G = g(A)\</strong>\</summary>
+<details>
+<summary><strong>Alice private evaluated matrix G = g(A)</strong></summary>
 
-\`\`\`text
+```text
 G =
     (10, 10, 2, 13, 13, 9, 11, 2, 1, 11, 0, 12, 0, 6, 13, 13, 13, 14, 3, 8, 11, 5, 3, 3, 15, 4, 14, 14, 0, 5, 13, 12)
     (2, 10, 6, 14, 0, 15, 11, 9, 1, 9, 8, 9, 14, 2, 0, 5, 8, 7, 6, 8, 9, 12, 5, 9, 3, 6, 7, 6, 11, 12, 10, 15)
@@ -946,14 +921,14 @@ G =
     (15, 5, 2, 2, 5, 5, 5, 5, 11, 11, 11, 9, 13, 1, 7, 6, 9, 4, 6, 10, 12, 10, 1, 6, 15, 0, 11, 10, 6, 4, 3, 1)
     (5, 3, 12, 7, 11, 1, 11, 3, 5, 14, 11, 8, 8, 2, 2, 3, 9, 11, 14, 7, 13, 14, 4, 8, 13, 12, 10, 4, 14, 5, 10, 9)
     (9, 3, 1, 5, 13, 12, 10, 2, 12, 2, 0, 7, 15, 13, 11, 6, 13, 6, 8, 2, 14, 7, 1, 15, 8, 11, 6, 1, 15, 13, 4, 5)
-\`\`\`
+```
 
-\</details>
+</details>
 
-\<details>
-\<summary>\<strong>Bob private evaluated matrix J = j(A)\</strong>\</summary>
+<details>
+<summary><strong>Bob private evaluated matrix J = j(A)</strong></summary>
 
-\`\`\`text
+```text
 J =
     (4, 11, 0, 11, 5, 6, 11, 4, 4, 14, 5, 8, 5, 9, 12, 12, 14, 13, 1, 12, 15, 8, 15, 13, 3, 15, 7, 6, 4, 13, 7, 7)
     (8, 10, 8, 5, 14, 9, 7, 8, 14, 7, 1, 11, 1, 5, 14, 2, 11, 0, 7, 4, 3, 9, 4, 3, 9, 8, 7, 4, 1, 1, 9, 9)
@@ -987,14 +962,14 @@ J =
     (0, 10, 7, 8, 0, 9, 12, 11, 3, 5, 14, 12, 14, 6, 9, 0, 5, 9, 10, 6, 2, 6, 6, 8, 11, 13, 8, 5, 15, 2, 0, 12)
     (6, 15, 8, 6, 6, 15, 11, 12, 10, 13, 10, 4, 0, 2, 12, 10, 10, 7, 10, 7, 5, 0, 0, 3, 1, 3, 14, 12, 0, 8, 14, 15)
     (9, 14, 4, 9, 5, 12, 6, 8, 14, 7, 12, 11, 8, 8, 4, 0, 14, 5, 10, 6, 4, 7, 3, 0, 12, 0, 5, 7, 6, 12, 13, 12)
-\`\`\`
+```
 
-\</details>
+</details>
 
-\<details>
-\<summary>\<strong>Alice public matrix token TA\</strong>\</summary>
+<details>
+<summary><strong>Alice public matrix token TA</strong></summary>
 
-\`\`\`text
+```text
 TA =
     (0, 1, 13, 14, 4, 10, 4, 7, 15, 4, 9, 11, 3, 2, 7, 0, 2, 8, 14, 8, 4, 4, 11, 8, 3, 5, 11, 13, 8, 2, 13, 6)
     (4, 2, 8, 11, 3, 11, 5, 7, 14, 14, 8, 14, 4, 14, 0, 9, 15, 6, 11, 8, 9, 13, 14, 12, 15, 14, 2, 6, 1, 8, 1, 14)
@@ -1028,14 +1003,14 @@ TA =
     (0, 2, 2, 15, 8, 13, 10, 1, 3, 9, 10, 0, 6, 10, 2, 6, 0, 3, 15, 12, 15, 15, 7, 12, 13, 15, 5, 2, 3, 11, 5, 1)
     (13, 7, 13, 13, 4, 1, 9, 0, 15, 12, 0, 10, 3, 12, 4, 15, 12, 1, 11, 11, 7, 3, 13, 11, 1, 0, 3, 9, 12, 13, 15, 1)
     (8, 8, 4, 9, 8, 4, 1, 3, 13, 5, 14, 12, 4, 0, 7, 4, 10, 9, 3, 1, 3, 2, 4, 7, 13, 15, 2, 8, 2, 14, 2, 0)
-\`\`\`
+```
 
-\</details>
+</details>
 
-\<details>
-\<summary>\<strong>Bob public matrix token TB\</strong>\</summary>
+<details>
+<summary><strong>Bob public matrix token TB</strong></summary>
 
-\`\`\`text
+```text
 TB =
     (3, 6, 3, 4, 2, 3, 15, 7, 5, 3, 8, 15, 6, 2, 6, 4, 0, 12, 13, 3, 5, 0, 2, 3, 3, 10, 13, 8, 6, 0, 9, 14)
     (7, 0, 9, 6, 10, 0, 10, 14, 15, 7, 8, 5, 12, 5, 9, 13, 3, 6, 6, 6, 13, 7, 3, 10, 0, 4, 7, 11, 5, 3, 3, 10)
@@ -1069,14 +1044,14 @@ TB =
     (14, 6, 1, 1, 15, 5, 8, 0, 8, 14, 2, 11, 1, 0, 13, 13, 13, 1, 3, 8, 8, 14, 10, 15, 8, 9, 8, 8, 14, 3, 15, 2)
     (8, 2, 11, 9, 3, 3, 10, 10, 3, 2, 6, 6, 14, 4, 4, 9, 1, 12, 1, 9, 3, 15, 6, 6, 0, 2, 14, 6, 14, 10, 7, 9)
     (6, 14, 0, 7, 13, 15, 11, 10, 10, 15, 14, 12, 7, 4, 14, 13, 14, 0, 10, 6, 6, 15, 2, 8, 6, 0, 8, 4, 7, 0, 0, 12)
-\`\`\`
+```
 
-\</details>
+</details>
 
-\<details>
-\<summary>\<strong>Shared matrix MA = MB = M\</strong>\</summary>
+<details>
+<summary><strong>Shared matrix MA = MB = M</strong></summary>
 
-\`\`\`text
+```text
 M =
     (12, 6, 0, 2, 6, 6, 15, 1, 5, 4, 0, 12, 11, 5, 3, 13, 7, 1, 15, 8, 11, 11, 11, 14, 10, 8, 14, 9, 14, 9, 8, 14)
     (4, 10, 10, 4, 13, 4, 1, 7, 13, 10, 7, 6, 0, 4, 7, 4, 2, 3, 13, 8, 12, 6, 11, 15, 12, 3, 15, 5, 9, 13, 12, 12)
@@ -1110,584 +1085,584 @@ M =
     (5, 15, 1, 14, 12, 5, 14, 13, 4, 15, 11, 5, 5, 14, 10, 13, 10, 15, 7, 14, 5, 3, 13, 9, 4, 15, 6, 9, 12, 0, 0, 8)
     (5, 2, 9, 5, 6, 1, 7, 8, 0, 12, 7, 5, 13, 15, 14, 15, 5, 0, 9, 3, 10, 8, 9, 5, 5, 9, 13, 12, 8, 7, 14, 11)
     (1, 7, 8, 10, 0, 0, 9, 2, 2, 7, 7, 3, 7, 1, 2, 4, 13, 5, 2, 11, 4, 8, 13, 9, 11, 14, 3, 6, 11, 10, 12, 12)
-\`\`\`
+```
 
-\</details>
+</details>
 
-**### 4. Deterministic derivation of the private shared octonion \`oB\`**
+### 4. Deterministic derivation of the private shared octonion `oB`
 
 The shared matrix contains
 
-\`\`\`math
+```math
 32^2=1024
-\`\`\`
+```
 
 entries and is partitioned into a $4\times4$ grid of $8\times8$ submatrices:
 
-\`\`\`math
+```math
 M=
 \begin{pmatrix}
-M\_{00}&M\_{01}&M\_{02}&M\_{03}\\\\
-M\_{10}&M\_{11}&M\_{12}&M\_{13}\\\\
-M\_{20}&M\_{21}&M\_{22}&M\_{23}\\\\
-M\_{30}&M\_{31}&M\_{32}&M\_{33}
+M_{00}&M_{01}&M_{02}&M_{03}\\
+M_{10}&M_{11}&M_{12}&M_{13}\\
+M_{20}&M_{21}&M_{22}&M_{23}\\
+M_{30}&M_{31}&M_{32}&M_{33}
 \end{pmatrix}.
-\`\`\`
+```
 
 For each $8\times8$ block,
 
-\`\`\`math
-S\_{ij}
-\=
-\sum\_{r=0}^{7}\sum\_{c=0}^{7}(M\_{ij})\_{r,c}.
-\`\`\`
+```math
+S_{ij}
+=
+\sum_{r=0}^{7}\sum_{c=0}^{7}(M_{ij})_{r,c}.
+```
 
-The sums are **\*\*not\*\*** reduced modulo $p$ before decimal concatenation. For this execution,
+The sums are **not** reduced modulo $p$ before decimal concatenation. For this execution,
 
-\`\`\`math
-\left(S\_{ij}\right)=
+```math
+\left(S_{ij}\right)=
 \begin{pmatrix}
-454&474&538&535\\\\
-456&497&497&478\\\\
-512&529&481&507\\\\
+454&474&538&535\\
+456&497&497&478\\
+512&529&481&507\\
 463&464&525&494
 \end{pmatrix}.
-\`\`\`
+```
 
 Exactly four public deterministic traversals are used.
 
-**#### Traversal 1 — rows left-to-right, top-to-bottom**
+#### Traversal 1 — rows left-to-right, top-to-bottom
 
-\`\`\`math
+```math
 \begin{aligned}
-R\_1=(&M\_{00},M\_{01},M\_{02},M\_{03},
-M\_{10},M\_{11},M\_{12},M\_{13},\\\\
-&M\_{20},M\_{21},M\_{22},M\_{23},
-M\_{30},M\_{31},M\_{32},M\_{33}).
+R_1=(&M_{00},M_{01},M_{02},M_{03},
+M_{10},M_{11},M_{12},M_{13},\\
+&M_{20},M_{21},M_{22},M_{23},
+M_{30},M_{31},M_{32},M_{33}).
 \end{aligned}
-\`\`\`
+```
 
 Ordered sums:
 
-\`\`\`text
+```text
 (454, 474, 538, 535, 456, 497, 497, 478,
  512, 529, 481, 507, 463, 464, 525, 494)
-\`\`\`
+```
 
-**#### Traversal 2 — rows right-to-left, top-to-bottom**
+#### Traversal 2 — rows right-to-left, top-to-bottom
 
-\`\`\`math
+```math
 \begin{aligned}
-R\_2=(&M\_{03},M\_{02},M\_{01},M\_{00},
-M\_{13},M\_{12},M\_{11},M\_{10},\\\\
-&M\_{23},M\_{22},M\_{21},M\_{20},
-M\_{33},M\_{32},M\_{31},M\_{30}).
+R_2=(&M_{03},M_{02},M_{01},M_{00},
+M_{13},M_{12},M_{11},M_{10},\\
+&M_{23},M_{22},M_{21},M_{20},
+M_{33},M_{32},M_{31},M_{30}).
 \end{aligned}
-\`\`\`
+```
 
 Ordered sums:
 
-\`\`\`text
+```text
 (535, 538, 474, 454, 478, 497, 497, 456,
  507, 481, 529, 512, 494, 525, 464, 463)
-\`\`\`
+```
 
-**#### Traversal 3 — columns top-to-bottom, left-to-right**
+#### Traversal 3 — columns top-to-bottom, left-to-right
 
-\`\`\`math
+```math
 \begin{aligned}
-R\_3=(&M\_{00},M\_{10},M\_{20},M\_{30},
-M\_{01},M\_{11},M\_{21},M\_{31},\\\\
-&M\_{02},M\_{12},M\_{22},M\_{32},
-M\_{03},M\_{13},M\_{23},M\_{33}).
+R_3=(&M_{00},M_{10},M_{20},M_{30},
+M_{01},M_{11},M_{21},M_{31},\\
+&M_{02},M_{12},M_{22},M_{32},
+M_{03},M_{13},M_{23},M_{33}).
 \end{aligned}
-\`\`\`
+```
 
 Ordered sums:
 
-\`\`\`text
+```text
 (454, 456, 512, 463, 474, 497, 529, 464,
  538, 497, 481, 525, 535, 478, 507, 494)
-\`\`\`
+```
 
-**#### Traversal 4 — columns bottom-to-top, left-to-right**
+#### Traversal 4 — columns bottom-to-top, left-to-right
 
-\`\`\`math
+```math
 \begin{aligned}
-R\_4=(&M\_{30},M\_{20},M\_{10},M\_{00},
-M\_{31},M\_{21},M\_{11},M\_{01},\\\\
-&M\_{32},M\_{22},M\_{12},M\_{02},
-M\_{33},M\_{23},M\_{13},M\_{03}).
+R_4=(&M_{30},M_{20},M_{10},M_{00},
+M_{31},M_{21},M_{11},M_{01},\\
+&M_{32},M_{22},M_{12},M_{02},
+M_{33},M_{23},M_{13},M_{03}).
 \end{aligned}
-\`\`\`
+```
 
 Ordered sums:
 
-\`\`\`text
+```text
 (463, 512, 456, 454, 464, 529, 497, 474,
  525, 481, 497, 538, 494, 507, 478, 535)
-\`\`\`
+```
 
 For traversal $r$, let
 
-\`\`\`math
-\left(S\_0^{(r)},S\_1^{(r)},\ldots,S\_{15}^{(r)}\right)
-\`\`\`
+```math
+\left(S_0^{(r)},S_1^{(r)},\ldots,S_{15}^{(r)}\right)
+```
 
 denote its ordered sums. The candidate octonion is
 
-\`\`\`math
-o\_B^{(r)}
-\=
+```math
+o_B^{(r)}
+=
 \left(
-b\_0^{(r)},b\_1^{(r)},\ldots,b\_7^{(r)}
+b_0^{(r)},b_1^{(r)},\ldots,b_7^{(r)}
 \right),
-\`\`\`
+```
 
 where
 
-\`\`\`math
-b\_k^{(r)}
-\=
+```math
+b_k^{(r)}
+=
 \mathrm{conc}
 \left(
-S\_{2k}^{(r)},S\_{2k+1}^{(r)}
+S_{2k}^{(r)},S_{2k+1}^{(r)}
 \right)
 \pmod{251},
 \qquad
 0\leq k\leq 7.
-\`\`\`
+```
 
 Here $\mathrm{conc}(a,b)$ denotes decimal concatenation. For example,
 
-\`\`\`math
+```math
 \mathrm{conc}(454,474)=454474.
-\`\`\`
+```
 
 For the first traversal, every component is therefore obtained explicitly as
 
-\`\`\`math
+```math
 \begin{aligned}
-b\_0&=454474\pmod{251}=164,\\\\
-b\_1&=538535\pmod{251}=140,\\\\
-b\_2&=456497\pmod{251}=179,\\\\
-b\_3&=497478\pmod{251}=247,\\\\
-b\_4&=512529\pmod{251}=238,\\\\
-b\_5&=481507\pmod{251}=89,\\\\
-b\_6&=463464\pmod{251}=118,\\\\
-b\_7&=525494\pmod{251}=151.
+b_0&=454474\pmod{251}=164,\\
+b_1&=538535\pmod{251}=140,\\
+b_2&=456497\pmod{251}=179,\\
+b_3&=497478\pmod{251}=247,\\
+b_4&=512529\pmod{251}=238,\\
+b_5&=481507\pmod{251}=89,\\
+b_6&=463464\pmod{251}=118,\\
+b_7&=525494\pmod{251}=151.
 \end{aligned}
-\`\`\`
+```
 
 Thus
 
-\`\`\`math
-o\_B^{(1)}
-\=
+```math
+o_B^{(1)}
+=
 (164,140,179,247,238,89,118,151).
-\`\`\`
+```
 
 The modular quadratic norm of a candidate
 
-\`\`\`math
-o=(a\_0,a\_1,\ldots,a\_7)
-\`\`\`
+```math
+o=(a_0,a_1,\ldots,a_7)
+```
 
 is
 
-\`\`\`math
+```math
 N(o)
-\=
-\sum\_{i=0}^{7}a\_i^2
+=
+\sum_{i=0}^{7}a_i^2
 \pmod{251}.
-\`\`\`
+```
 
 For the first candidate,
 
-\`\`\`math
+```math
 \begin{aligned}
-N\left(o\_B^{(1)}\right)
+N\left(o_B^{(1)}\right)
 &=
-164^2+140^2+179^2+247^2\\\\
+164^2+140^2+179^2+247^2\\
 &\quad+238^2+89^2+118^2+151^2
-\pmod{251}\\\\
+\pmod{251}\\
 &=
-240836\pmod{251}\\\\
+240836\pmod{251}\\
 &=
-127\.
+127.
 \end{aligned}
-\`\`\`
+```
 
 The four candidates are:
 
-\| Configuration | Candidate $o\_B^{(r)}$ | $N(o\_B^{(r)})\pmod{251}$ | Invertible |
-\|---:|---|---:|:---:|
-\| 1 | $(164,140,179,247,238,89,118,151)$ | 127 | Yes |
-\| 2 | $(155,64,91,225,210,153,55,113)$ | 152 | Yes |
-\| 3 | $(146,172,107,105,102,107,95,223)$ | 118 | Yes |
-\| 4 | $(166,136,179,243,138,56,37,129)$ | 126 | Yes |
+| Configuration | Candidate $o_B^{(r)}$ | $N(o_B^{(r)})\pmod{251}$ | Invertible |
+|---:|---|---:|:---:|
+| 1 | $(164,140,179,247,238,89,118,151)$ | 127 | Yes |
+| 2 | $(155,64,91,225,210,153,55,113)$ | 152 | Yes |
+| 3 | $(146,172,107,105,102,107,95,223)$ | 118 | Yes |
+| 4 | $(166,136,179,243,138,56,37,129)$ | 126 | Yes |
 
 Alice and Bob test the candidates in the fixed order
 
-\`\`\`math
-o\_B^{(1)},\\;
-o\_B^{(2)},\\;
-o\_B^{(3)},\\;
-o\_B^{(4)}
-\`\`\`
+```math
+o_B^{(1)},\;
+o_B^{(2)},\;
+o_B^{(3)},\;
+o_B^{(4)}
+```
 
 and select the first invertible candidate. Therefore,
 
-\`\`\`math
+```math
 \boxed{
-o\_B=
+o_B=
 (164,140,179,247,238,89,118,151)
 }
-\`\`\`
+```
 
 with
 
-\`\`\`math
-\boxed{N(o\_B)=127\neq0\pmod{251}}.
-\`\`\`
+```math
+\boxed{N(o_B)=127\neq0\pmod{251}}.
+```
 
 Since
 
-\`\`\`math
+```math
 127^{-1}\equiv168\pmod{251},
-\`\`\`
+```
 
 the inverse is
 
-\`\`\`math
+```math
 \boxed{
-o\_B^{-1}
-\=
+o_B^{-1}
+=
 (193,74,48,170,176,108,5,234)
 }.
-\`\`\`
+```
 
 Both sides obtain exactly the same value:
 
-\`\`\`text
+```text
 oB obtained by Alice = (164, 140, 179, 247, 238, 89, 118, 151)
 oB obtained by Bob   = (164, 140, 179, 247, 238, 89, 118, 151)
-\`\`\`
+```
 
-The octonion \`oB\` is a **\*\*private shared value\*\*** derived from $M$; it is not transmitted as a public protocol parameter.
+The octonion `oB` is a **private shared value** derived from $M$; it is not transmitted as a public protocol parameter.
 
-**### 5. Octonion-stage values**
+### 5. Octonion-stage values
 
 The public octonion is
 
-\`\`\`math
-o\_A=(110,77,55,246,49,37,180,227).
-\`\`\`
+```math
+o_A=(110,77,55,246,49,37,180,227).
+```
 
 Alice's secret displacement is
 
-\`\`\`math
-o\_{S1}=(90,99,173,196,56,179,159,183),
-\`\`\`
+```math
+o_{S1}=(90,99,173,196,56,179,159,183),
+```
 
 and Bob's secret displacement is
 
-\`\`\`math
-o\_{S2}=(105,132,26,79,96,86,74,246).
-\`\`\`
+```math
+o_{S2}=(105,132,26,79,96,86,74,246).
+```
 
 The shifted arguments are
 
-\`\`\`math
--o\_A+o\_{S1}
-\=
+```math
+-o_A+o_{S1}
+=
 (231,22,118,201,7,142,230,207)
 \pmod{251},
-\`\`\`
+```
 
 and
 
-\`\`\`math
--o\_A+o\_{S2}
-\=
+```math
+-o_A+o_{S2}
+=
 (246,55,222,84,47,49,145,19)
 \pmod{251}.
-\`\`\`
+```
 
-**#### Polynomial evaluations**
+#### Polynomial evaluations
 
 Alice obtains
 
-\`\`\`math
-f(o\_A)
-\=
+```math
+f(o_A)
+=
 (161,167,191,188,15,165,9,49),
-\`\`\`
+```
 
 and
 
-\`\`\`math
-f(-o\_A+o\_{S1})
-\=
+```math
+f(-o_A+o_{S1})
+=
 (242,208,66,189,89,156,235,86).
-\`\`\`
+```
 
 Bob obtains
 
-\`\`\`math
-h(o\_A)
-\=
+```math
+h(o_A)
+=
 (36,70,50,178,113,239,118,1),
-\`\`\`
+```
 
 and
 
-\`\`\`math
-h(-o\_A+o\_{S2})
-\=
+```math
+h(-o_A+o_{S2})
+=
 (23,219,26,193,105,8,121,208).
-\`\`\`
+```
 
 Octonion powers use iterative left association:
 
-\`\`\`math
+```math
 x^1=x,
 \qquad
 x^{k+1}=x^k\cdot x.
-\`\`\`
+```
 
 Using $m=100$,
 
-\`\`\`math
-f\_1=f(o\_A)^{100}
-\=
+```math
+f_1=f(o_A)^{100}
+=
 (210,192,173,144,145,89,87,139),
-\`\`\`
+```
 
-\`\`\`math
-f\_2=f(-o\_A+o\_{S1})^{100}
-\=
+```math
+f_2=f(-o_A+o_{S1})^{100}
+=
 (242,35,28,103,91,89,229,181).
-\`\`\`
+```
 
 Using $n=191$,
 
-\`\`\`math
-h\_1=h(o\_A)^{191}
-\=
+```math
+h_1=h(o_A)^{191}
+=
 (164,221,122,103,95,41,57,143),
-\`\`\`
+```
 
-\`\`\`math
-h\_2=h(-o\_A+o\_{S2})^{191}
-\=
+```math
+h_2=h(-o_A+o_{S2})^{191}
+=
 (87,1,109,143,83,188,208,119).
-\`\`\`
+```
 
-**### 6. Discrete modular pointwise self-convolutions**
+### 6. Discrete modular pointwise self-convolutions
 
 For this implementation, define Alice's self-convolution value as
 
-\`\`\`math
+```math
 F
-\=
-(f\*f)(o\_A,o\_{S1},m)
-\=
-f\_1\cdot f\_2
+=
+(f*f)(o_A,o_{S1},m)
+=
+f_1\cdot f_2
 \pmod{251},
-\`\`\`
+```
 
 and Bob's value as
 
-\`\`\`math
+```math
 H
-\=
-(h\*h)(o\_A,o\_{S2},n)
-\=
-h\_1\cdot h\_2
+=
+(h*h)(o_A,o_{S2},n)
+=
+h_1\cdot h_2
 \pmod{251}.
-\`\`\`
+```
 
 Numerically,
 
-\`\`\`math
+```math
 \boxed{
 F=
 (143,24,73,69,112,249,151,110)
 }
-\`\`\`
+```
 
 and
 
-\`\`\`math
+```math
 \boxed{
 H=
 (37,248,29,58,24,40,56,191)
 }.
-\`\`\`
+```
 
-**### 7. Public octonion tokens**
+### 7. Public octonion tokens
 
 Alice computes
 
-\`\`\`math
-r\_A
-\=
-F\cdot o\_B
+```math
+r_A
+=
+F\cdot o_B
 \pmod{251},
-\`\`\`
+```
 
 therefore
 
-\`\`\`math
+```math
 \begin{aligned}
-r\_A
+r_A
 &=
-(143,24,73,69,112,249,151,110)\\\\
+(143,24,73,69,112,249,151,110)\\
 &\quad\cdot
 (164,140,179,247,238,89,118,151)
-\pmod{251}\\\\
+\pmod{251}\\
 &=
 \boxed{(109,143,239,222,30,224,64,69)}.
 \end{aligned}
-\`\`\`
+```
 
 Bob computes
 
-\`\`\`math
-r\_B
-\=
-H\cdot o\_B
+```math
+r_B
+=
+H\cdot o_B
 \pmod{251},
-\`\`\`
+```
 
 therefore
 
-\`\`\`math
+```math
 \begin{aligned}
-r\_B
+r_B
 &=
-(37,248,29,58,24,40,56,191)\\\\
+(37,248,29,58,24,40,56,191)\\
 &\quad\cdot
 (164,140,179,247,238,89,118,151)
-\pmod{251}\\\\
+\pmod{251}\\
 &=
 \boxed{(231,237,167,18,158,187,189,8)}.
 \end{aligned}
-\`\`\`
+```
 
 The public octonion tokens are therefore
 
-\`\`\`text
+```text
 rA = (109, 143, 239, 222, 30, 224, 64, 69)
 rB = (231, 237, 167, 18, 158, 187, 189, 8)
-\`\`\`
+```
 
-**### 8. Session-key computation**
+### 8. Session-key computation
 
 Alice directly computes
 
-\`\`\`math
-k\_A
-\=
-F\cdot r\_B
+```math
+k_A
+=
+F\cdot r_B
 \pmod{251}.
-\`\`\`
+```
 
 Keeping the binary parenthesization used by the implementation,
 
-\`\`\`math
+```math
 \begin{aligned}
-k\_A
+k_A
 &=
-(143,24,73,69,112,249,151,110)\\\\
+(143,24,73,69,112,249,151,110)\\
 &\quad\cdot
 (231,237,167,18,158,187,189,8)
-\pmod{251}\\\\
+\pmod{251}\\
 &=
 \boxed{(52,214,127,106,248,51,170,142)}.
 \end{aligned}
-\`\`\`
+```
 
 Bob first recovers Alice's self-convolution using his private knowledge of the shared octonion:
 
-\`\`\`math
-F\_B
-\=
-r\_A\cdot o\_B^{-1}
+```math
+F_B
+=
+r_A\cdot o_B^{-1}
 \pmod{251}.
-\`\`\`
+```
 
 Numerically,
 
-\`\`\`math
+```math
 \begin{aligned}
-F\_B
+F_B
 &=
-(109,143,239,222,30,224,64,69)\\\\
+(109,143,239,222,30,224,64,69)\\
 &\quad\cdot
 (193,74,48,170,176,108,5,234)
-\pmod{251}\\\\
+\pmod{251}\\
 &=
-(143,24,73,69,112,249,151,110)\\\\
+(143,24,73,69,112,249,151,110)\\
 &=F.
 \end{aligned}
-\`\`\`
+```
 
 Bob then computes
 
-\`\`\`math
-k\_B
-\=
-F\_B\cdot r\_B
+```math
+k_B
+=
+F_B\cdot r_B
 \pmod{251},
-\`\`\`
+```
 
 which gives
 
-\`\`\`math
+```math
 \boxed{
-k\_B=(52,214,127,106,248,51,170,142)
+k_B=(52,214,127,106,248,51,170,142)
 }.
-\`\`\`
+```
 
 Consequently,
 
-\`\`\`math
+```math
 \boxed{
-k\_A=k\_B=k
-\=
+k_A=k_B=k
+=
 (52,214,127,106,248,51,170,142)
 }.
-\`\`\`
+```
 
 The implementation therefore terminates with
 
-\`\`\`text
+```text
 SUCCESS!!! Alice and Bob generated the same key.
 
 kA = (52, 214, 127, 106, 248, 51, 170, 142)
 kB = (52, 214, 127, 106, 248, 51, 170, 142)
 Session key k = (52, 214, 127, 106, 248, 51, 170, 142)
-\`\`\`
+```
 
 For the recorded execution used in this example:
 
-\`\`\`text
+```text
 Execution time = 0:00:00.128410
-\`\`\`
+```
 
 This numerical execution is intended as a reproducibility example for the research implementation. Equality of the generated keys demonstrates correctness for this run; it does not by itself constitute a cryptographic security proof.
 
-**---**
+---
 
-**## Authors**
+## Authors
 
-**\*\*José Federico Castro Tramontina\*\***  
+**José Federico Castro Tramontina**  
 PhD candidate. Design, development, implementation, numerical validation, and cryptanalysis of HK17.2.
 
-**\*\*Pedro Hecht\*\***  
+**Pedro Hecht**  
 PhD thesis director and co-author of the original HK17 protocol.
 
-**\*\*Jorge Kamlofsky\*\***  
+**Jorge Kamlofsky**  
 PhD thesis co-director and co-author of the original HK17 protocol.
