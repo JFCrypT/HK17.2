@@ -583,7 +583,7 @@ The benchmark invokes the definitive implementation located in `general/` and wr
 Create the Raspberry Pi virtual environment and install its Python dependencies:
 
 ```bash
-cd ~/Documents/Proyectos/HK17.2
+cd /path/to/HK17.2
 python3 -m venv raspberry/.venv
 source raspberry/.venv/bin/activate
 python -m pip install -r raspberry/requirements.txt
@@ -605,7 +605,7 @@ mosquitto -c raspberry/mosquitto.conf -v
 In another terminal, start the operational KMS and dashboard:
 
 ```bash
-cd ~/Documents/Proyectos/HK17.2
+cd /path/to/HK17.2
 source raspberry/.venv/bin/activate
 python3 raspberry/kms_web.py
 ```
@@ -619,7 +619,7 @@ http://192.168.1.40:8000/
 For unattended startup, `raspberry/start_kms.sh` is executable and the laboratory Raspberry Pi uses the local cron entry:
 
 ```cron
-@reboot /bin/bash /home/jfcrypt/Documents/Proyectos/HK17.2/raspberry/start_kms.sh
+@reboot /bin/bash /path/to/HK17.2/raspberry/start_kms.sh
 ```
 
 The system Mosquitto service is disabled so that the project broker configuration is the instance listening on the laboratory LAN.
