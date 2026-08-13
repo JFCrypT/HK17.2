@@ -84,7 +84,6 @@ HK17.2 is not presented as a lightweight cryptographic primitive. The embedded e
 
 ---
 
----
 
 ## Repository structure
 
